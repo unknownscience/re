@@ -331,37 +331,4 @@
 </style>
 
 <script>
-  // pop-up
-  document.querySelectorAll('.personagem img, .personagem h2').forEach(element => {
-    element.addEventListener('click', () => {
-      const card = element.closest('.personagem');
-      const imgSrc = card.querySelector('img').src;
-      const name = card.querySelector('h2').textContent;
-      const desc = card.querySelector('p').textContent;
-
-      document.getElementById('popup-img').src = imgSrc;
-      document.getElementById('popup-name').textContent = name;
-      document.getElementById('popup-desc').textContent = desc;
-
-      document.getElementById('popup').style.display = 'flex';
-    });
-  });
-
-  document.querySelector('.close-btn').addEventListener('click', () => {
-    document.getElementById('popup').style.display = 'none';
-  });
-
-  window.addEventListener('click', (e) => {
-    if (e.target === document.getElementById('popup')) {
-      document.getElementById('popup').style.display = 'none';
-    }
-  });
-</script>
-            }
-          });
-        });
-      });
-    });
-  </script>
-</body>
-  </html>
+ 
