@@ -42,7 +42,7 @@
 
     .gallery-personagens {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
       gap: 20px;
       justify-items: center;
     }
@@ -51,14 +51,18 @@
       background-color: #1c1c1c;
       border-radius: 12px;
       width: 250px;
+      min-height: 450px;
       text-align: center;
       padding: 15px;
       box-shadow: 0 0 10px rgba(255,255,255,0.1);
-      display: block;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
     }
 
     .personagem img {
       width: 100%;
+      height: 200px;
       object-fit: cover;
       border-radius: 10px;
     }
@@ -71,6 +75,7 @@
     .personagem p {
       font-size: 14px;
       color: #ccc;
+      flex-grow: 1;
     }
 
     .fav-btn {
@@ -99,12 +104,12 @@
     <div class="personagem" data-id="enenra">
       <img src="https://i.postimg.cc/0ys0XyQZ/012-1-2.jpg" alt="Enenra">
       <h2>Enenra</h2>
-      <p>Yōkai da fumaça que se infiltrava sob disfarce humano. Pode tornar‑se intangível, manipular névoa e atacar de surpresa.</p>
+      <p>Yōkai da fumaça que se infiltra sob disfarce humano. Pode tornar‑se intangível, manipular névoa e atacar de surpresa.</p>
       <button class="fav-btn">♡ Favoritar</button>
     </div>
 
     <div class="personagem" data-id="jin-enjoji">
-      <img src="https://i.postimg.cc/4yC59r8L/017-2.jpg" alt="Jin Enjoji">
+      <img src="https://i.postimg.cc/4yC59r8L/017‑2.jpg" alt="Jin Enjoji">
       <h2>Jin Enjoji</h2>
       <p>Amigo de infância da Momo Ayase. Envolvido com forças sobrenaturais e maldição ligada ao Mau Olhado.</p>
       <button class="fav-btn">♡ Favoritar</button>
@@ -118,65 +123,65 @@
     </div>
 
     <div class="personagem" data-id="mau-olhado">
-      <img src="https://i.postimg.cc/pTkZmy0S/img-or1001221540-0026.jpg" alt="Mau Olhado">
+      <img src="https://i.postimg.cc/pTkZmy0S/img‑or1001221540‑0026.jpg" alt="Mau Olhado">
       <h2>Mau Olhado</h2>
       <p>Espírito vingativo que habita o corpo de Jiji. Cria casa demoníaca para aprisionar vítimas e comanda almas em ataque.</p>
       <button class="fav-btn">♡ Favoritar</button>
     </div>
 
     <div class="personagem" data-id="unji-zuma">
-      <img src="https://i.postimg.cc/J0yCFQTW/1740950375-o64uop34y4mbgan1woffwq7fk5fks13mqkmjzy2uxx76z8mp4.jpg" alt="Unji Zuma">
+      <img src="https://i.postimg.cc/J0yCFQTW/1740950375‑o64uop34y4mbgan1woffwq7fk5fks13mqkmjzy2uxx76z8mp4.jpg" alt="Unji Zuma">
       <h2>Unji Zuma</h2>
       <p>Ex‑líder de gangue que ganha poderes de yokai após fusão com Umbrella Boy. Usa guarda‑chuvas que disparam ondas de choque.</p>
       <button class="fav-btn">♡ Favoritar</button>
     </div>
 
     <div class="personagem" data-id="count-saint-germain">
-      <img src="https://i.postimg.cc/PqCt9ZSj/1731779198-b6gubtanwhpn33kz185s2vjp5uz8lc65f4ibqyf5m0-2.jpg" alt="Count Saint‑Germain">
+      <img src="https://i.postimg.cc/PqCt9ZSj/1731779198‑b6gubtanwhpn33kz185s2vjp5uz8lc65f4ibqyf5m0‑2.jpg" alt="Count Saint‑Germain">
       <h2>Count Saint‑Germain</h2>
       <p>Nobre com poderes sobrenaturais, procura o misterioso “Dandadan” e manipula forças de adversários e aliados.</p>
       <button class="fav-btn">♡ Favoritar</button>
     </div>
 
     <div class="personagem" data-id="reiko-kashima">
-      <img src="https://i.postimg.cc/26DYVv8L/003-2.jpg" alt="Reiko Kashima">
+      <img src="https://i.postimg.cc/26DYVv8L/003‑2.jpg" alt="Reiko Kashima">
       <h2>Reiko Kashima</h2>
       <p>Morreu e renasceu como yokai dos espelhos. Manipula reflexos como portais e pode atacar através de superfícies refletivas.</p>
       <button class="fav-btn">♡ Favoritar</button>
     </div>
 
-    <div.class="personagem" data-id="rin-sawaki">
-      <img src="https://i.postimg.cc/wj4YcZx2/011-2.jpg" alt="Rin Sawaki">
+    <div class="personagem" data-id="rin-sawaki">
+      <img src="https://i.postimg.cc/wj4YcZx2/011‑2.jpg" alt="Rin Sawaki">
       <h2>Rin Sawaki</h2>
       <p>Estudante que adquire poderes yokai e manipula gravidade ao cantar. Papel de apoio decisivo.</p>
       <button class="fav-btn">♡ Favoritar</button>
     </div>
 
     <div class="personagem" data-id="aira-shiratori">
-      <img src="https://i.postimg.cc/Xvv9G2Q7/019-2.jpg" alt="Aira Shiratori">
+      <img src="https://i.postimg.cc/Xvv9G2Q7/019‑2.jpg" alt="Aira Shiratori">
       <h2>Aira Shiratori</h2>
       <p>Estudante bonita e autoconfiante. Ganha habilidades yokai ligadas à acrobacia e combate.</p>
       <button class="fav-btn">♡ Favoritar</button>
     </div>
 
     <div class="personagem" data-id="vamola">
-      <img src="https://i.postimg.cc/Dz9Gm7Dw/016-2.jpg" alt="Vamola">
+      <img src="https://i.postimg.cc/Dz9Gm7Dw/016‑2.jpg" alt="Vamola">
       <h2>Vamola</h2>
-      <p>Única sobrevivente da raça suméria que veio à Terra. Pilota uma armadura poderosa e luta com alienígenas e espíritos.</p>
+      <p>Única sobrevivente da raça suméria que veio à Terra. Pilota uma armadura poderosa e luta com alienígenas e espíritos.</p>
       <button class="fav-btn">♡ Favoritar</button>
     </div>
 
     <div class="personagem" data-id="koki-yukishiro">
       <img src="https://i.postimg.cc/66Ydfx4n/FRp1WFq‑Omkl‑TE1Qy46Wwb4bscegt8Sc‑QQNo3.jpg" alt="Kōki Yukishiro">
       <h2>Kōki Yukishiro</h2>
-      <p>Aluna que vê pygmies, seres diminutos que obedecem seus comandos. Importante no arco “Kozuka Knives”.</p>
+      <p>Aluna que vê pygmies, seres diminutos que obedecem seus comandos. Importante no arco “Kozuka Knives”.</p>
       <button class="fav-btn">♡ Favoritar</button>
     </div>
 
     <div class="personagem" data-id="ken-takakura">
       <img src="https://i.postimg.cc/L5tLchHj/029.jpg" alt="Ken Takakura">
       <h2>Ken Takakura</h2>
-      <p>Estudante do ensino médio apaixonado por ocultismo e OVNIs. É possuído por um yōkai, iniciando uma maldição.</p>
+      <p>Estudante do ensino médio apaixonado por ocultismo e OVNIs. É possuído por um yōkai, iniciando uma maldição.</p>
       <button class="fav-btn">♡ Favoritar</button>
     </div>
 
@@ -189,7 +194,7 @@
       const cards = document.querySelectorAll('.personagem');
       let mostrandoFavoritos = false;
 
-      // Inicializa favoritos salvos
+      // Estado inicial dos favoritos
       let favs = JSON.parse(localStorage.getItem('favs')) || [];
       cards.forEach(card => {
         const id = card.getAttribute('data-id');
@@ -243,4 +248,4 @@
   </script>
 
 </body>
-</html>
+  </html>
