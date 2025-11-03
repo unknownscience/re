@@ -3,7 +3,48 @@
   <meta charset="UTF-8">  
   <title>Galeria de Personagens</title>  
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">  
-  <style>  
+  <style>h1 {
+  font-size: 3em;
+  font-weight: 700;
+  text-align: center;
+  background: linear-gradient(90deg, #ff79c6, #ffb3d9, #ff79c6);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  text-shadow:
+    0 0 5px #ff79c6,
+    0 0 10px #ff79c6,
+    0 0 20px #ffb3d9,
+    0 0 30px #ff79c6,
+    0 0 40px #ffb3d9;
+  animation: neonGlow 2s ease-in-out infinite alternate;
+}
+
+@keyframes neonGlow {
+  0% {
+    text-shadow:
+      0 0 5px #ff79c6,
+      0 0 10px #ff79c6,
+      0 0 20px #ffb3d9,
+      0 0 30px #ff79c6,
+      0 0 40px #ffb3d9;
+  }
+  50% {
+    text-shadow:
+      0 0 10px #ff79c6,
+      0 0 20px #ff79c6,
+      0 0 30px #ffb3d9,
+      0 0 40px #ff79c6,
+      0 0 50px #ffb3d9;
+  }
+  100% {
+    text-shadow:
+      0 0 5px #ff79c6,
+      0 0 10px #ff79c6,
+      0 0 20px #ffb3d9,
+      0 0 30px #ff79c6,
+      0 0 40px #ffb3d9;
+  }
+}
 /* 🌌 Fundo animado e geral */  
 body {  
   margin: 0;  
