@@ -4,6 +4,218 @@
   <meta charset="UTF-8">
   <title>Galeria de Personagens</title>
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+  <!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <title>Galeria Mágica de Personagens</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+  <style>
+/* 🌌 Fundo animado e geral */
+body {
+  margin: 0;
+  padding: 20px;
+  font-family: 'Poppins', sans-serif;
+  background: linear-gradient(135deg, #1a0033, #2e004f, #3b005f);
+  background-size: 300% 300%;
+  animation: bgShift 15s ease infinite;
+  color: #fff;
+  overflow-x: hidden;
+}
+
+/* animação do background */
+@keyframes bgShift {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+/* título brilhante */
+h1 {
+  text-align: center;
+  font-size: 2.5em;
+  color: #ff79c6;
+  text-shadow: 0 0 15px #ff79c6, 0 0 30px #ff79c6;
+  animation: pulseTitle 3s ease-in-out infinite;
+  margin-bottom: 30px;
+}
+
+@keyframes pulseTitle {
+  0%,100% { text-shadow: 0 0 10px #ff79c6; }
+  50% { text-shadow: 0 0 25px #ff79c6, 0 0 40px #ff79c6; }
+}
+
+/* filtros */
+.filtros {
+  text-align: center;
+  margin-bottom: 30px;
+}
+.filtros button {
+  background-color: rgba(68,68,68,0.8);
+  color: #fff;
+  border: none;
+  padding: 10px 15px;
+  margin: 5px;
+  border-radius: 15px;
+  cursor: pointer;
+  font-weight: 600;
+  transition: all 0.3s;
+}
+.filtros button:hover,
+.filtros button.active {
+  background-color: #ff79c6;
+  color: #1a1a2e;
+  box-shadow: 0 0 15px #ff79c6;
+}
+
+/* gallery flex/grid */
+.gallery-personagens {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 25px;
+  justify-items: center;
+}
+
+/* cards flutuantes */
+.personagem {
+  background: rgba(45, 0, 70, 0.75);
+  border: 2px solid rgba(255, 121, 198, 0.4);
+  border-radius: 18px;
+  box-shadow: 0 0 20px rgba(255,121,198,0.3);
+  transition: transform 0.4s ease, box-shadow 0.3s ease;
+  transform: translateY(0);
+  animation: floatCards 4s ease-in-out infinite;
+  backdrop-filter: blur(8px);
+  overflow: hidden;
+}
+.personagem:hover {
+  transform: scale(1.05) translateY(-5px);
+  border-color: #ff79c6;
+  box-shadow: 0 0 35px rgba(255,121,198,0.7);
+}
+
+/* animação flutuar cards */
+@keyframes floatCards {
+  0%,100% { transform: translateY(0); }
+  50% { transform: translateY(-8px); }
+}
+
+/* imagem do personagem */
+.personagem img {
+  width: 100%;
+  border-radius: 12px;
+  transition: transform 0.4s ease;
+}
+.personagem:hover img {
+  transform: scale(1.08);
+}
+
+/* nome e descrição */
+.personagem h2 {
+  margin: 10px 0 5px;
+  color: #ff79c6;
+  text-align: center;
+}
+.personagem p {
+  font-size: 13px;
+  color: #ddd;
+  text-align: center;
+  padding: 0 10px;
+}
+
+/* botão favoritar */
+.fav-btn {
+  background: #ff79c6;
+  border: none;
+  border-radius: 12px;
+  padding: 8px 16px;
+  cursor: pointer;
+  color: #1a1a2e;
+  font-weight: bold;
+  transition: all 0.3s;
+  display: block;
+  margin: 10px auto 10px auto;
+}
+.fav-btn:hover {
+  background: #ffb3d9;
+  transform: scale(1.1);
+  box-shadow: 0 0 15px #ff79c6;
+}
+  </style>
+</head>
+<body>
+  <h1>Galeria Mágica de Personagens</h1>
+
+  <div class="filtros">
+    <button data-filter="all" class="active">Todos</button>
+    <button data-filter="dan-da-dan">Dan da Dan</button>
+    <button data-filter="jujutsu-kaisen">Jujutsu Kaisen</button>
+    <button data-filter="one-piece">One Piece</button>
+    <button data-filter="onepunch">One Punch Man</button>
+  </div>
+
+  <div class="gallery-personagens">
+    <div class="personagem" data-anime="dan-da-dan" data-id="momo-ayase">
+      <img src="https://i.postimg.cc/mgbG9nJ7/004.jpg" alt="Momo Ayase">
+      <h2>Momo Ayase</h2>
+      <p>Poderes psíquicos, braços invisíveis. Papel central entre o sobrenatural e o científico.</p>
+      <button class="fav-btn">♡ Favoritar</button>
+    </div>
+
+    <div class="personagem" data-anime="dan-da-dan" data-id="jin-enjoji">
+      <img src="https://i.postimg.cc/hjLYvxTW/017-2.jpg" alt="Jin Enjoji">
+      <h2>Jin Enjoji</h2>
+      <p>Amigo de infância da Momo, possuído pelo espírito Mau Olhado.</p>
+      <button class="fav-btn">♡ Favoritar</button>
+    </div>
+  </div>
+
+  <script>
+    // favoritos
+    window.addEventListener('DOMContentLoaded', () => {
+      const favs = JSON.parse(localStorage.getItem('favs')) || [];
+      document.querySelectorAll('.personagem').forEach(card => {
+        const id = card.getAttribute('data-id');
+        const btn = card.querySelector('.fav-btn');
+        if (favs.includes(id)) btn.textContent = '❤️ Favoritado';
+      });
+
+      document.querySelectorAll('.fav-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+          const card = btn.closest('.personagem');
+          const id = card.getAttribute('data-id');
+          let favs = JSON.parse(localStorage.getItem('favs')) || [];
+          if (favs.includes(id)) {
+            favs = favs.filter(f => f !== id);
+            btn.textContent = '♡ Favoritar';
+          } else {
+            favs.push(id);
+            btn.textContent = '❤️ Favoritado';
+          }
+          localStorage.setItem('favs', JSON.stringify(favs));
+        });
+      });
+
+      // filtros
+      const buttons = document.querySelectorAll('.filtros button');
+      const personagens = document.querySelectorAll('.personagem');
+      buttons.forEach(btn => {
+        btn.addEventListener('click', () => {
+          buttons.forEach(b => b.classList.remove('active'));
+          btn.classList.add('active');
+          const filter = btn.getAttribute('data-filter');
+          personagens.forEach(p => {
+            p.style.display =
+              filter === 'all' || p.getAttribute('data-anime') === filter
+                ? 'block'
+                : 'none';
+          });
+        });
+      });
+    });
+  </script>
+</body>
+</html>
   <style>.comments-container {
   background-color: #2e2e3e; /* tom escuro para combinar */
   border: 2px solid #ff79c6; /* borda rosa/rubi */
