@@ -290,13 +290,6 @@
       <p>Possui técnica amaldiçoada que cria uma “corte” sobrenatural, julgando adversários com martelo mutável.</p>
       <button class="fav-btn">♡ Favoritar</button>
     </div>
-
-    <div class="personagem" data-anime="jujutsu-kaisen" data-id="choso">
-  <img src="https://i.postimg.cc/s2HCXJ99/Picsart-25-11-03-16-40-22-175.jpg" alt="Choso">
-  <h2>Choso</h2>
-  <p>Maldição da série que domina a manipulação de sangue; um membro dos Death Painting Wombs com vínculo intenso aos irmãos.</p>
-  <button class="fav-btn">♡ Favoritar</button>
-    </div>
     
   <div class="personagem" data-anime="onepunch" data-id="garou">
   <img src="https://i.postimg.cc/JhWWCzmr/Picsart-25-11-03-00-23-50-498.jpg" alt="Garou">
@@ -358,7 +351,68 @@
       document.querySelectorAll('.personagem').forEach(card => {
         const id = card.getAttribute('data-id');
 
-     
+        // cria container de comentários se não existir
+        let container = card.querySelector('.comments-container');
+        if (!container) {
+          container = document.createElement('div');
+          container.classList.add('comments-container');
+          card.appendChild(container);
+        }
+
+        // cria textarea se não existir
+        let textarea = card.querySelector('.comment-input');
+        if (!textarea) {
+          textarea = document.createElement('textarea');
+          textarea.placeholder = 'Deixe um comentário…';
+          textarea.classList.add('comment-input');
+          card.appendChild(textarea);
+        }
+
+        // cria botão se não existir
+        let btn = card.querySelector('.comment-submit');
+        if (!btn) {
+          btn = document.createElement('button');
+          btn.textContent = 'Enviar comentário';
+          btn.classList.add('comment-submit');
+          card.appendChild(btn);
+        }
+
+        // função pra renderizar comentários
+        const renderComments = () => {
+          const key = 'comments_' + id;
+          let comms = JSON.parse(localStorage.getItem(key)) || [];
+          container.innerHTML = '';
+          comms.forEach((c, index) => {
+            const div = document.createElement('div');
+            div.classList.add('comment');
+            div.textContent = c;
+
+            // botão de apagar
+            const btnDel = document.createElement('button');
+            btnDel.textContent = '❌';
+            btnDel.style.marginLeft = '8px';
+            btnDel.addEventListener('click', () => {
+              comms.splice(index, 1);
+              localStorage.setItem(key, JSON.stringify(comms));
+              renderComments();
+            });
+
+            div.appendChild(btnDel);
+            container.appendChild(div);
+          });
+        };
+
+        renderComments();
+
+        // clique no botão enviar
+        btn.addEventListener('click', () => {
+          const key = 'comments_' + id;
+          let comms = JSON.parse(localStorage.getItem(key)) || [];
+          if (textarea.value.trim() !== '') {
+            comms.push(textarea.value.trim());
+            localStorage.setItem(key, JSON.stringify(comms));
+            textarea.value = '';
+            renderComments();
           }
         });
       });
@@ -409,7 +463,28 @@ window.addEventListener('DOMContentLoaded', () => {
         const btnDel = document.createElement('button');
         btnDel.textContent = '❌';
         btnDel.style.marginLeft = '8px';
- 
+        btnDel.addEventListener('click', () => {
+          comms.splice(index, 1);
+          localStorage.setItem(key, JSON.stringify(comms));
+          renderComments();
+        });
+
+        div.appendChild(btnDel);
+        container.appendChild(div);
+      });
+    };
+
+    renderComments();
+
+    // enviar comentário
+    btn.addEventListener('click', () => {
+      const key = 'comments_' + id;
+      let comms = JSON.parse(localStorage.getItem(key)) || [];
+      if (textarea.value.trim() !== '') {
+        comms.push(textarea.value.trim());
+        localStorage.setItem(key, JSON.stringify(comms));
+        textarea.value = '';
+        renderComments();
       }
     });
   });
@@ -456,338 +531,7 @@ window.addEventListener('DOMContentLoaded', () => {
     });
   });
 </script>
-<script>
-document.addEventListener('DOMContentLoaded', () => {
-  const cards = document.querySelectorAll('.personagem');
-
-  cards.forEach(card => {
-    let x = 0, y = 0; // posição inicial
-    let dx = (Math.random() - 0.5) * 2; // velocidade horizontal aleatória
-    let dy = (Math.random() - 0.5) * 2; // velocidade vertical aleatória
-
-    setInterval(() => {
-      x += dx;
-      y += dy;
-      // limite máximo de movimento para não sair do grid
-      if(Math.abs(x) > 15) dx *= -1;
-      if(Math.abs(y) > 15) dy *= -1;
-      // aplica transformação
-      card.style.transform = `translate(${x}px, ${y}px) scale(1.02)`;
-    }, 50); // atualiza a cada 50ms
-  });
-});
-</script>
-<script>
-document.addEventListener('DOMContentLoaded', () => {
-  document.querySelectorAll('.fav-btn').forEach(btn => {
-    btn.addEventListener('click', () => {
-      btn.classList.add('animate-like');
-      setTimeout(() => {
-        btn.classList.remove('animate-like');
-      }, 600);  // duração da animação
-    });
-  });
-});
-</script>
-
-<style>
-.fav-btn.animate-like {
-  animation: popHeart 0.6s ease;
-}
-@keyframes popHeart {
-  0% { transform: scale(1); color: #1a1a2e; }
-  30% { transform: scale(1.4); color: #ff79c6; }
-  60% { transform: scale(0.9); color: #ffb3d9; }
-  100% { transform: scale(1); color: #1a1a2e; }
-}
-</style>
-<script>
-document.addEventListener('DOMContentLoaded', () => {
-  
-  // Entrada suave dos cards via scroll
-  const cards = document.querySelectorAll('.personagem');
-  const observer2 = new IntersectionObserver(entries => {
-    entries.forEach(entry => {
-      if (entry.isIntersecting) {
-        entry.target.classList.add('enter-visible');
-        observer2.unobserve(entry.target);
-      }
-    });
-  }, { threshold: 0.2 });
-  cards.forEach(card => {
-    card.classList.add('enter-hidden');
-    observer2.observe(card);
-  });
-});
-
-</script>
-<style>
-/* === Ao clicar, card aumenta === */
-.personagem.clicked {
-  transform: scale(1.1);
-  z-index: 10;
-  transition: transform 0.3s ease;
-}
-
-/* === Botão voltar ao topo === */
-#backTop {
-  position: fixed;
-  bottom: 30px;
-  right: 30px;
-  background: #ff79c6;
-  color: #1a1a2e;
-  border: none;
-  padding: 12px 18px;
-  border-radius: 12px;
-  cursor: pointer;
-  font-weight: bold;
-  font-size: 14px;
-  box-shadow: 0 0 15px #ff79c6;
-  transition: all 0.3s;
-  display: none;
-  z-index: 99;
-}
-
-#backTop:hover {
-  background: #ffb3d9;
-}
-</style>
-
-<!-- Botão voltar ao topo -->
-<button id="backTop">⬆ Voltar ao topo</button>
-
-<script>
-// === Cards aumentam ao clicar ===
-document.querySelectorAll('.personagem').forEach(card => {
-  card.addEventListener('click', () => {
-    card.classList.toggle('clicked');
-  });
-});
-
-// === Mostrar botão voltar ao topo ao rolar ===
-const backTop = document.getElementById('backTop');
-window.addEventListener('scroll', () => {
-  if (window.scrollY > 300) {
-    backTop.style.display = 'block';
-  } else {
-    backTop.style.display = 'none';
-  }
-});
-
-// === Função do botão voltar ao topo ===
-backTop.addEventListener('click', () => {
-  window.scrollTo({ top: 0, behavior: 'smooth' });
-});
-</script>
-<script>
-document.addEventListener('DOMContentLoaded', () => {
-  // Hover/reveal nos cards
-  document.querySelectorAll('.personagem').forEach(card => {
-    card.addEventListener('mouseenter', () => {
-      card.classList.add('hover-reveal');
-    });
-    card.addEventListener('mouseleave', () => {
-      card.classList.remove('hover-reveal');
-    });
-  });
-
-  // Botão “Voltar ao topo”
-  const topBtn = document.createElement('button');
-  topBtn.id = 'scrollTopBtn';
-  topBtn.textContent = '↑';
-  document.body.appendChild(topBtn);
-
-  const toggleTopBtn = () => {
-    if (window.scrollY > 200) {
-      topBtn.classList.add('show');
-    } else {
-      topBtn.classList.remove('show');
-    }
-  };
-  window.addEventListener('scroll', toggleTopBtn);
-  topBtn.addEventListener('click', () => {
-    window.scrollTo({ top: 0, behavior: 'smooth' });
-  });
-
-  // Lazy-load de imagens
-  const imgs = document.querySelectorAll('img[data-src]');
-  if ('IntersectionObserver' in window) {
-    const observer = new IntersectionObserver((entries, obs) => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          const img = entry.target;
-          img.src = img.dataset.src;
-          img.removeAttribute('data-src');
-          obs.unobserve(img);
-        }
-      });
-    }, { rootMargin: '200px 0px' });
-    imgs.forEach(img => observer.observe(img));
-  } else {
-    imgs.forEach(img => {
-      img.src = img.dataset.src;
-      img.removeAttribute('data-src');
-    });
-  }
-
-  // Entrada suave dos cards via scroll
-  const cards = document.querySelectorAll('.personagem');
-  const observer2 = new IntersectionObserver(entries => {
-    entries.forEach(entry => {
-      if (entry.isIntersecting) {
-        entry.target.classList.add('enter-visible');
-        observer2.unobserve(entry.target);
-      }
-    });
-  }, { threshold: 0.2 });
-  cards.forEach(card => {
-    card.classList.add('enter-hidden');
-    observer2.observe(card);
-  });
-});
-</script>
-
-<style>
-/* Hover/reveal nos cards */
-.personagem.hover-reveal {
-  transform: translateY(-8px) scale(1.03);
-  box-shadow: 0 8px 20px rgba(255,121,198,0.7);
-  transition: transform 0.3s, box-shadow 0.3s;
-}
-
-/* Botão “Voltar ao topo” */
-#scrollTopBtn {
-  position: fixed;
-  bottom: 30px;
-  right: 30px;
-  display: none;
-  padding: 12px 18px;
-  font-size: 24px;
-  background: #ff79c6;
-  color: #1a1a2e;
-  border: 3px solid #bf4f8d; /* borda reforçada */
-  border-radius: 50%;
-  cursor: pointer;
-  box-shadow: 0 4px 10px rgba(0,0,0,0.3);
-  transition: transform 0.3s, opacity 0.3s;
-  z-index: 1000;
-}
-#scrollTopBtn.show {
-  display: block;
-  opacity: 1;
-}
-#scrollTopBtn:hover {
-  transform: scale(1.1);
-  border-color: #ffb3d9;
-}
-
-/* Lazy-load imagens estilo */
-img[data-src] {
-  opacity: 0;
-  transition: opacity 0.5s ease-in;
-}
-img:not([data-src]) {
-  opacity: 1;
-}
-
-/* Entrada suave dos cards via scroll */
-.personagem.enter-hidden {
-  opacity: 0;
-  transform: translateY(30px);
-}
-.personagem.enter-visible {
-  transition: all 0.6s ease-out;
-  opacity: 1;
-  transform: translateY(0);
-}
-
-/* Botões gerais com bordas reforçadas */
-button, .fav-btn {
-  border: 2px solid #ff79c6;
-  border-radius: 12px;
-  padding: 8px 16px;
-  transition: all 0.3s;
-}
-button:hover, .fav-btn:hover {
-  border-color: #ffb3d9;
-  background-color: rgba(255,121,198,0.1);
-}
-
-/* Botões favoritos específicos */
-.fav-btn {
-  background: #ff79c6;
-  color: #1a1a2e;
-  font-weight: bold;
-}
-.fav-btn:hover {
-  background: #ffb3d9;
-  box-shadow: 0 0 15px #ff79c6;
-}
-</style>
-<style>
-/* === Card aumenta ao clicar === */
-.personagem.clicked {
-  transform: scale(1.05);
-  z-index: 10;
-  transition: transform 0.3s ease;
-  box-shadow: 0 0 25px #ff79c6; /* borda brilhante ao clicar */
-  border: 2px solid #ff79c6;
-}
-
-/* === Botão voltar ao topo pequeno === */
-#backTop {
-  position: fixed;
-  bottom: 20px;
-  right: 20px;
-  width: 40px;
-  height: 40px;
-  background: #1a1a2e;
-  color: #ff79c6;
-  border: 2px solid #ff79c6;
-  border-radius: 50%;
-  font-size: 20px;
-  cursor: pointer;
-  display: none;
-  align-items: center;
-  justify-content: center;
-  display: flex;
-  box-shadow: 0 0 10px #ff79c6;
-  transition: all 0.3s;
-}
-
-#backTop:hover {
-  background: #ff79c6;
-  color: #1a1a2e;
-  box-shadow: 0 0 15px #ffb3d9;
-}
-</style>
-
-<!-- Botão voltar ao topo -->
-<button id="backTop">⬆</button>
-
-<script>
-// === Cards aumentam ao clicar ===
-document.querySelectorAll('.personagem').forEach(card => {
-  card.addEventListener('click', () => {
-    card.classList.toggle('clicked');
-  });
-});
-
-// === Mostrar botão voltar ao topo ao rolar ===
-const backTop = document.getElementById('backTop');
-window.addEventListener('scroll', () => {
-  if (window.scrollY > 300) {
-    backTop.style.display = 'flex';
-  } else {
-    backTop.style.display = 'none';
-  }
-});
-
-// === Função do botão voltar ao topo ===
-backTop.addEventListener('click', () => {
-  window.scrollTo({ top: 0, behavior: 'smooth' });
-});
-</script>
 </body>
   </html>
-      
+
+  
