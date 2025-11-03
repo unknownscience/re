@@ -170,6 +170,50 @@
     }
   </style>
 </head>
+  <script>window.addEventListener('DOMContentLoaded', () => {
+  document.querySelectorAll('.personagem').forEach(card => {
+    const id = card.getAttribute('data-id');
+    // cria container para comentários
+    const container = document.createElement('div');
+    container.classList.add('comments-container');
+    card.appendChild(container);
+    // cria input e botão
+    const textarea = document.createElement('textarea');
+    textarea.placeholder = 'Deixe um comentário…';
+    const btn = document.createElement('button');
+    btn.textContent = 'Enviar comentário';
+    btn.classList.add('comment-submit');
+    card.appendChild(textarea);
+    card.appendChild(btn);
+
+    // função pra renderizar comentários
+    const renderComments = () => {
+      const key = 'comments_'+id;
+      let comms = JSON.parse(localStorage.getItem(key)) || [];
+      container.innerHTML = '';
+      comms.forEach(c => {
+        const div = document.createElement('div');
+        div.classList.add('comment');
+        div.textContent = c;
+        container.appendChild(div);
+      });
+    };
+
+    renderComments();
+
+    // clique no enviar
+    btn.addEventListener('click', () => {
+      const key = 'comments_'+id;
+      let comms = JSON.parse(localStorage.getItem(key)) || [];
+      if(textarea.value.trim() !== '') {
+        comms.push(textarea.value.trim());
+        localStorage.setItem(key, JSON.stringify(comms));
+        textarea.value = '';
+        renderComments();
+      }
+    });
+  });
+});
 <body>
   <h1>Galeria de Personagens</h1>
 
