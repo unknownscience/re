@@ -423,6 +423,115 @@ document.addEventListener('DOMContentLoaded', () => {
       });
     });
     </script>
+    <!-- ❤️ Botão de Curtida -->
+<button class="like-button">
+  <svg viewBox="0 0 24 24" class="heart-icon">
+    <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5
+             2 5.42 4.42 3 7.5 3
+             c1.74 0 3.41.81 4.5 2.09
+             C13.09 3.81 14.76 3 16.5 3
+             19.58 3 22 5.42 22 8.5
+             c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/>
+  </svg>
+  <span class="like-count">0</span>
+</button>
+
+<style>
+.like-button {
+  position: relative;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 10px;
+  outline: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform 0.1s ease;
+}
+
+.like-button:active {
+  transform: scale(0.9);
+}
+
+.heart-icon {
+  width: 32px;
+  height: 32px;
+  fill: none;
+  stroke: #aaa;
+  stroke-width: 2;
+  transition: fill 0.25s ease, stroke 0.25s ease, transform 0.25s ease;
+}
+
+.like-button.liked .heart-icon {
+  fill: #ff2d55;
+  stroke: #ff2d55;
+  transform: scale(1.2);
+}
+
+.like-count {
+  margin-left: 6px;
+  font-size: 16px;
+  color: #fff;
+  transition: color 0.3s ease;
+}
+
+.like-button.liked .like-count {
+  color: #ff2d55;
+}
+
+/* Animação do "+1" */
+.float-heart {
+  position: absolute;
+  top: -10px;
+  font-size: 14px;
+  color: #ff2d55;
+  opacity: 0;
+  animation: floatUp 0.8s ease forwards;
+}
+
+@keyframes floatUp {
+  0% {
+    transform: translateY(0);
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(-30px);
+    opacity: 0;
+  }
+}
+</style>
+
+<script>
+document.querySelectorAll('.like-button').forEach(button => {
+  const countSpan = button.querySelector('.like-count');
+  let liked = false;
+  let count = 0;
+
+  button.addEventListener('click', () => {
+    liked = !liked;
+    if (liked) {
+      count++;
+      button.classList.add('liked');
+      countSpan.textContent = count;
+
+      // criar o +1 flutuante
+      const floatHeart = document.createElement('span');
+      floatHeart.textContent = '+1';
+      floatHeart.classList.add('float-heart');
+      button.appendChild(floatHeart);
+
+      // remover depois da animação
+      setTimeout(() => floatHeart.remove(), 800);
+    } else {
+      count--;
+      if (count < 0) count = 0;
+      button.classList.remove('liked');
+      countSpan.textContent = count;
+    }
+  });
+});
+</script>
 </body>
   </html>
 
