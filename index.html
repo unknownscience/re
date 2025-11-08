@@ -4,7 +4,6 @@
   <meta charset="UTF-8">
   <title>Galeria de Personagens</title>
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
-
   <style>
     body {
       background-color: #1a1a2e;
@@ -13,19 +12,16 @@
       padding: 20px;
       margin: 0;
     }
-
     h1 {
       text-align: center;
       color: #ff79c6;
       margin-bottom: 20px;
       font-size: 2em;
     }
-
     .filtros {
       text-align: center;
       margin-bottom: 30px;
     }
-
     .filtros button {
       background-color: #444;
       color: #fff;
@@ -37,73 +33,46 @@
       font-weight: 600;
       transition: 0.2s;
     }
-
     .filtros button:hover,
     .filtros button.active {
       background-color: #ff79c6;
       color: #1a1a2e;
     }
-
-    /* grid dos personagens */
     .gallery-personagens {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
       gap: 20px;
       justify-items: center;
     }
-
     .personagem {
       background-color: #2e2e3e;
       border-radius: 20px;
       width: 250px;
       text-align: center;
       padding: 15px;
-      box-shadow: 0 0 20px rgba(255,121,198,0.3);
+      box-shadow: 0 0 20px rgba(255, 121, 198, 0.3);
       transition: transform 0.3s, box-shadow 0.3s;
     }
-
     .personagem:hover {
       transform: scale(1.05);
       box-shadow: 0 0 25px rgba(255,121,198,0.6);
     }
-
     .personagem img {
       width: 100%;
       border-radius: 15px;
       display: block;
     }
-
     .personagem h2 {
       margin: 10px 0 5px;
       color: #ff79c6;
     }
-
     .personagem p {
       font-size: 13px;
       color: #ddd;
     }
-
-    /* SEÇÃO ANIMES – começa escondida */
-    #gallery-animes {
-      display: none;
-      margin-top: 30px;
-      text-align: center;
-    }
-
-    #gallery-animes iframe {
-      width: 90%;
-      max-width: 650px;
-      height: 360px;
-      border: none;
-      border-radius: 15px;
-      box-shadow: 0 0 20px rgba(255,121,198,0.4);
-    }
-
   </style>
 </head>
-
 <body>
-
   <h1>Galeria de Personagens</h1>
 
   <div class="filtros">
@@ -112,223 +81,174 @@
     <button data-filter="jujutsu-kaisen">Jujutsu Kaisen</button>
     <button data-filter="one-piece">One Piece</button>
     <button data-filter="onepunch">One Punch Man</button>
-    <button data-filter="animes">Animes</button>
   </div>
 
-  <!-- GALERIA DE PERSONAGENS -->
-  <div class="gallery-personagens" id="gallery-personagens">
-<!-- Dan da Dan -->
+  <div class="gallery-personagens">
+    <!-- Dan da Dan -->
     <div class="personagem" data-anime="dan-da-dan" data-id="momo-ayase">
       <img src="https://i.postimg.cc/c1jx5ZKj/Picsart-25-11-03-00-33-27-851.jpg" alt="Momo Ayase">
       <h2>Momo Ayase</h2>
-      <p>Adolescente com percepção espiritual avançada e braços psíquicos invisíveis, enfrentando forças sobrenaturais.</p>
+      <p>Poderes psíquicos, braços invisíveis. Papel central entre o sobrenatural e o científico.</p>
     </div>
 
     <div class="personagem" data-anime="dan-da-dan" data-id="jin-enjoji">
       <img src="https://i.postimg.cc/wTyv63Kc/Picsart-25-11-03-00-32-36-858.jpg" alt="Jin Enjoji">
       <h2>Jin Enjoji</h2>
-      <p>Garoto ligado ao oculto após ser possuído pelo Mau Olhado, equilibrando coragem e vulnerabilidade.</p>
+      <p>Amigo de infância da Momo, possuído pelo espírito Mau Olhado, que o liga ao mundo sobrenatural.</p>
     </div>
 
     <div class="personagem" data-anime="dan-da-dan" data-id="enenra">
       <img src="https://i.postimg.cc/3NwkjZcR/Picsart-25-11-03-00-36-00-583.jpg" alt="Enenra">
       <h2>Enenra</h2>
-      <p>Yōkai composto de fumaça, capaz de se dissipar, enganar e atacar com movimentos intangíveis.</p>
+      <p>Yōkai da fumaça que pode tornar-se intangível e atacar pelo invisível.</p>
     </div>
 
     <div class="personagem" data-anime="dan-da-dan" data-id="mau-olhado">
       <img src="https://i.postimg.cc/jqGT4X9J/Picsart-25-11-03-00-40-45-978.jpg" alt="Mau Olhado">
       <h2>Mau Olhado</h2>
-      <p>Espírito rancoroso que manipula maldições e influencia Jiji, criando ambientes distorcidos e hostis.</p>
+      <p>Espírito vingativo que habita o corpo de Jiji e comanda maldições e almas dentro de sua casa demoníaca.</p>
     </div>
 
     <div class="personagem" data-anime="dan-da-dan" data-id="reiko-kashima">
       <img src="https://i.postimg.cc/4dQcQy4K/Picsart-25-11-03-00-37-03-585.jpg" alt="Reiko Kashima">
       <h2>Reiko Kashima</h2>
-      <p>Entidade dos espelhos que consegue aprisionar e atacar através de reflexos e superfícies polidas.</p>
+      <p>Yōkai dos espelhos que pode prender pessoas e até exércitos em dimensões refletidas e atacar através de superfícies de vidro.</p>
     </div>
 
     <div class="personagem" data-anime="dan-da-dan" data-id="unji-zuma">
       <img src="https://i.postimg.cc/3rZjgSdR/Picsart-25-11-03-00-41-38-577.jpg" alt="Unji Zuma">
       <h2>Unji Zuma</h2>
-      <p>Líder de gangue determinado, que obtém poderes yokai após o contato com Umbrella Boy.</p>
+      <p>Líder de gangue que adquire poderes do yokai Umbrella Boy e entra em missão para vencer o jogo amaldiçoado Danmanra.</p>
     </div>
 
     <div class="personagem" data-anime="dan-da-dan" data-id="rin-sawaki">
       <img src="https://i.postimg.cc/YCPzvvj8/Picsart-25-11-03-00-35-03-843.jpg" alt="Rin Sawaki">
       <h2>Rin Sawaki</h2>
-      <p>Estudante talentosa cuja voz pode manipular gravidade, apoiando o grupo em batalhas críticas.</p>
+      <p>Manipula gravidade ao cantar. Estudante exemplar que se envolve nos casos sobrenaturais.</p>
     </div>
 
     <div class="personagem" data-anime="dan-da-dan" data-id="count-saint-germain">
       <img src="https://i.postimg.cc/90BB01qr/Picsart-25-11-03-00-39-41-882.jpg" alt="Count Saint-Germain">
       <h2>Count Saint-Germain</h2>
-      <p>Nobre excêntrico colecionador do paranormal, interessado em reunir poderes de várias entidades.</p>
+      <p>Nobre colecionador do paranormal. Busca reunir poderes de yōkai, alienígenas e artefatos para alcançar o supremo.</p>
     </div>
 
     <div class="personagem" data-anime="dan-da-dan" data-id="vamola">
       <img src="https://i.postimg.cc/YCCdGcR2/Picsart-25-11-03-00-34-16-310.jpg" alt="Vamola">
       <h2>Vamola</h2>
-      <p>Guerreira sobrevivente de um povo extinto, equipada com armadura avançada e grande força física.</p>
+      <p>Última sobrevivente da raça suméria. Pilota uma armadura poderosa e luta ao lado dos protagonistas.</p>
     </div>
 
     <div class="personagem" data-anime="dan-da-dan" data-id="aira-shiratori">
       <img src="https://i.postimg.cc/mDHXLQw7/Picsart-25-11-03-00-38-41-747.jpg" alt="Aira Shiratori">
       <h2>Aira Shiratori</h2>
-      <p>Estudante atlética com habilidades yokai, inicialmente rival, mas depois aliada importante do grupo.</p>
+      <p>Estudante com habilidades yokai ligadas à acrobacia e combate. Inicialmente rival, une-se aos protagonistas.</p>
     </div>
 
     <div class="personagem" data-anime="dan-da-dan" data-id="okarun">
       <img src="https://i.postimg.cc/65NSQ1FN/Picsart-25-11-03-00-28-53-418.jpg" alt="Okarun">
       <h2>Okarun</h2>
-      <p>Jovem dedicado que desenvolve habilidades especiais, equilibrando humor e bravura em combate.</p>
+      <p>Possui habilidades de combate e apoio, mostrando coragem em batalhas sobrenaturais.</p>
     </div>
 
     <div class="personagem" data-anime="dan-da-dan" data-id="koki-yukishiro">
       <img src="https://i.postimg.cc/SxdH37Tx/Picsart-25-11-03-00-25-39-215.jpg" alt="Kōki Yukishiro">
       <h2>Kōki Yukishiro</h2>
-      <p>Aluna estrategista que controla pequenos seres chamados pygmies para auxiliar em batalhas.</p>
+      <p>Aluna que comanda pequenos seres chamados pygmies, usando-os estrategicamente contra adversários.</p>
     </div>
 
     <div class="personagem" data-anime="dan-da-dan" data-id="jiji-mau-olhado">
       <img src="https://i.postimg.cc/Qtw2S86H/Picsart-25-11-03-00-37-52-262.jpg" alt="Jiji + Mau Olhado Fusão">
       <h2>Jiji & Mau Olhado</h2>
-      <p>Fusão entre humano e espírito, capaz de manipular maldições com grande intensidade.</p>
+      <p>Fusão poderosa que combina Jiji e o Mau Olhado, dominando maldições e manipulando almas.</p>
     </div>
 
     <!-- Jujutsu Kaisen -->
     <div class="personagem" data-anime="jujutsu-kaisen" data-id="itadori-yuuji">
       <img src="https://i.postimg.cc/Gmwwwmxm/29-Sem-Titulo-20251102234830.png" alt="Itadori Yuuji">
       <h2>Itadori Yuuji</h2>
-      <p>Estudante de grande força física, que luta para controlar Sukuna após ingerir seu dedo.</p>
+      <p>Estudante que ingere Sukuna e luta contra maldições. Corajoso e leal aos amigos.</p>
     </div>
 
     <div class="personagem" data-anime="jujutsu-kaisen" data-id="hiromi-higuruma">
       <img src="https://i.postimg.cc/TYL8yD30/Picsart-25-11-03-00-31-33-155.jpg" alt="Hiromi Higuruma">
       <h2>Hiromi Higuruma</h2>
-      <p>Ex-advogado que usa uma técnica amaldiçoada baseada em julgamentos e decisões jurídicas.</p>
+      <p>Possui técnica amaldiçoada que cria uma “corte” sobrenatural, julgando adversários com martelo mutável.</p>
     </div>
 
     <div class="personagem" data-anime="jujutsu-kaisen" data-id="choso">
       <img src="https://i.postimg.cc/s2HCXJ99/Picsart-25-11-03-16-40-22-175.jpg" alt="Choso">
       <h2>Choso</h2>
-      <p>Membro dos Death Painting Wombs, especialista em técnicas de sangue e guiado por laços familiares.</p>
+      <p>Maldição da série que domina a manipulação de sangue; um membro dos Death Painting Wombs com vínculo intenso aos irmãos.</p>
     </div>
 
-    <div class="personagem" data-anime="jujutsu-kaisen" data-id="satoru-gojo">
-      <img src="https://i.postimg.cc/8PKzpCkd/34-Sem-Titulo-20251107024300.png" alt="Satoru Gojo">
-      <h2>Satoru Gojo</h2>
-      <p>Feiticeiro mais poderoso de sua era, capaz de manipular o espaço com o Ilimitado e os Seis Olhos.</p>
-    </div>
+<div class="personagem" data-anime="jujutsu-kaisen" data-id="satoru-gojo">
+  <img src="https://i.postimg.cc/8PKzpCkd/34-Sem-Titulo-20251107024300.png" alt="Satoru Gojo">
+  <h2>Satoru Gojo</h2>
+  <p>O feiticeiro mais forte que já existiu. Domina as técnicas do Ilimitado e possui o Seis Olhos, capaz de distorcer o espaço e redefinir a batalha.</p>
+</div>
 
     <!-- One Piece -->
     <div class="personagem" data-anime="one-piece" data-id="roronoa-zoro">
       <img src="https://i.postimg.cc/RVZN8hNL/Picsart-25-11-05-19-54-08-438.jpg" alt="Roronoa Zoro">
       <h2>Roronoa Zoro</h2>
-      <p>Espadachim dos Chapéus de Palha, mestre no estilo de três espadas e guiado por forte senso de honra.</p>
+      <p>Espadachim dos Chapéus de Palha. Mestre no estilo Santoryu, empunha três espadas com determinação inabalável e um senso de honra que corta o próprio destino.</p>
     </div>
 
     <!-- One Punch Man -->
     <div class="personagem" data-anime="onepunch" data-id="garou">
       <img src="https://i.postimg.cc/JhWWCzmr/Picsart-25-11-03-00-23-50-498.jpg" alt="Garou">
       <h2>Garou</h2>
-      <p>Artista marcial evolutivo que desafia heróis e busca romper seus próprios limites.</p>
+      <p>O Caçador de Heróis. Especialista em artes marciais, força e agilidade incríveis, sempre desafiando heróis e buscando evoluir como lutador.</p>
     </div>
-<!-- GALERIA DE ANIMES -->
-  <div id="gallery-animes">
-
-    <h2 style="color:#ff79c6; margin-bottom:15px;">Dan da Dan</h2>
-
-    <iframe 
-      id="video-dandadan"
-      src="https://streamable.com/e/bw1n19?autoplay=1&muted=1"
-      allow="autoplay"
-      allowfullscreen>
-    </iframe>
 
   </div>
-<script>
-document.addEventListener('DOMContentLoaded', () => {
 
-  const buttons = document.querySelectorAll('.filtros button');
-  const personagens = document.querySelectorAll('.personagem');
-  const galleryPersonagens = document.getElementById('gallery-personagens');
-  const galleryAnimes = document.getElementById('gallery-animes');
-  const video = document.getElementById('video-dandadan');
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const buttons = document.querySelectorAll('.filtros button');
+      const personagens = document.querySelectorAll('.personagem');
 
-  buttons.forEach(btn => {
-    btn.addEventListener('click', () => {
-
-      // muda botão ativo
-      buttons.forEach(b => b.classList.remove('active'));
-      btn.classList.add('active');
-
-      const filter = btn.getAttribute('data-filter');
-
-      // quando clicar em ANIMES
-      if (filter === 'animes') {
-
-        // esconde personagens
-        galleryPersonagens.style.display = 'none';
-
-        // mostra animes
-        galleryAnimes.style.display = 'block';
-
-        // força autoplay (reinicia o vídeo)
-        video.src = video.src;
-
-        return;
-      }
-
-      // se não for ANIMES, esconde vídeo
-      galleryAnimes.style.display = 'none';
-
-      // mostra personagens
-      galleryPersonagens.style.display = 'grid';
-
-      // pausa vídeo ao trocar de filtro
-      video.src = video.src;
-
-      // filtro dos personagens normal
-      personagens.forEach(p => {
-        p.style.display =
-          filter === 'all' || p.getAttribute('data-anime') === filter
-            ? 'block'
-            : 'none';
+      buttons.forEach(btn => {
+        btn.addEventListener('click', () => {
+          buttons.forEach(b => b.classList.remove('active'));
+          btn.classList.add('active');
+          const filter = btn.getAttribute('data-filter');
+          personagens.forEach(p => {
+            p.style.display =
+              filter === 'all' || p.getAttribute('data-anime') === filter
+                ? 'block'
+                : 'none';
+          });
+        });
       });
-
     });
-  });
-
-});
-</script>
-
+  </script>
 <script>
-document.addEventListener('DOMContentLoaded', () => {
-  const cards = document.querySelectorAll('.personagem');
+  document.addEventListener('DOMContentLoaded', () => {
+    const cards = document.querySelectorAll('.personagem');
 
-  // efeito de entrada em cascata
-  cards.forEach((card, index) => {
-    card.style.opacity = 0;
-    card.style.transform = 'translateY(30px)';
-    setTimeout(() => {
-      card.style.transition = 'all 0.6s ease-out';
-      card.style.opacity = 1;
-      card.style.transform = 'translateY(0)';
-    }, index * 100);
-  });
-
-  // hover animado nos cards
-  cards.forEach(card => {
-    card.addEventListener('mouseenter', () => {
-      card.style.transform = 'scale(1.06)';
-      card.style.boxShadow = '0 0 25px rgba(255,121,198,0.6)';
+    // efeito de entrada em cascata
+    cards.forEach((card, index) => {
+      card.style.opacity = 0;
+      card.style.transform = 'translateY(30px)';
+      setTimeout(() => {
+        card.style.transition = 'all 0.6s ease-out';
+        card.style.opacity = 1;
+        card.style.transform = 'translateY(0)';
+      }, index * 100);
     });
 
-    card.addEventListener('mouseleave', () => {
-      card.style.transform = 'scale(1)';
-      card.style.boxShadow = '0 0 20px rgba(255,121,198,0.3)';
+        // Hover animado nos cards
+    cards.forEach(card => {
+      card.addEventListener('mouseenter', () => {
+        card.style.transform = 'scale(1.06)';
+        card.style.boxShadow = '0 0 25px rgba(255,121,198,0.6)';
+      });
+      card.addEventListener('mouseleave', () => {
+        card.style.transform = 'scale(1)';
+        card.style.boxShadow = '0 0 20px rgba(255,121,198,0.3)';
+      });
     });
-  });
-});
-</script>
+</body>
+</html>
