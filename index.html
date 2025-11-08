@@ -55,9 +55,25 @@
     }
 
     @keyframes floatCard {
-      0% { transform: translateY(0); }
-      50% { transform: translateY(-6px); }
-      100% { transform: translateY(0); }
+  0% {
+    transform: translateY(0) scale(1);
+  }
+  20% {
+    transform: translateY(-14px) scale(1.04);
+  }
+  40% {
+    transform: translateY(3px) scale(1.02);
+  }
+  60% {
+    transform: translateY(-10px) scale(1.035);
+  }
+  80% {
+    transform: translateY(2px) scale(1.015);
+  }
+  100% {
+    transform: translateY(0) scale(1);
+  }
+    }
     }
 
     .personagem {
@@ -69,7 +85,7 @@
       text-align: center;
       padding: 16px;
       box-shadow: 0 0 18px rgba(0,0,0,0.6);
-      animation: floatCard 4s ease-in-out infinite;
+      animation: floatCard 2.4s ease-in-out infinite;
       transition: transform 0.25s, box-shadow 0.25s, border-color 0.25s;
       overflow: hidden;
     }
