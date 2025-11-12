@@ -7,7 +7,6 @@
   <style>
     body {
       background-color: #0a0a0a;
-      /* textura leve de papel */
       background-image: radial-gradient(#111 1px, transparent 1px);
       background-size: 40px 40px;
       color: #e1e1e1;
@@ -16,7 +15,6 @@
       padding: 20px;
       overflow-x: hidden;
     }
-
     .filtros {
       text-align: center;
       margin-bottom: 20px;
@@ -38,7 +36,6 @@
       background-color: #444444;
       color: #ffffff;
     }
-
     .gallery-wrap {
       overflow-x: auto;
       white-space: nowrap;
@@ -47,45 +44,41 @@
     .gallery-personagens {
       display: inline-flex;
       gap: 30px;
-      /* alinhar verticalmente ao centro */
       align-items: flex-start;
     }
-
     .personagem {
       display: inline-block;
       background-color: #151515;
       border-radius: 18px;
-      width: auto;
-      max-width: 300px;
+      width: 260px;
+      height: 380px;
       text-align: center;
       padding: 15px;
-      box-shadow: 0 0 15px rgba(255, 121, 198, 0.3);
+      box-shadow: 0 0 15px rgba(255,255,255,0.15);
       transition: transform 0.3s, box-shadow 0.3s;
+      overflow: hidden;
     }
     .personagem:hover {
       transform: scale(1.04);
-      box-shadow: 0 0 25px rgba(255,121,198,0.6);
+      box-shadow: 0 0 25px rgba(255,255,255,0.3);
     }
     .personagem img {
-      width: auto;
-      max-width: 100%;
+      width: 100%;
+      height: auto;
+      max-height: 220px;
       border-radius: 15px;
       display: block;
       margin: 0 auto 10px;
     }
     .personagem h2 {
       margin: 10px 0 5px;
-      color: #ff79c6;
-      font-family: 'Quicksand', sans-serif;
-      font-size: 1.5em;
-    }
-    .personagem p {
-      font-size: 13px;
       color: #c1c1c1;
-      line-height: 1.4;
+      font-family: 'Quicksand', sans-serif;
+      font-size: 1.4em;
+      overflow: hidden;
+      white-space: nowrap;
+      text-overflow: ellipsis;
     }
-
-    /* esconder barra de rolagem no WebKit para deixar mais limpinho */
     .gallery-wrap::-webkit-scrollbar {
       height: 8px;
     }
@@ -110,147 +103,109 @@
 
   <div class="gallery-wrap">
     <div class="gallery-personagens">
-      <!-- Dan da Dan -->
+      <!-- Inclui todos os cards dos personagens ### -->
       <div class="personagem" data-anime="dan-da-dan" data-id="momo-ayase">
         <img src="https://i.postimg.cc/c1jx5ZKj/Picsart-25-11-03-00-33-27-851.jpg" alt="Momo Ayase">
         <h2>Momo Ayase</h2>
       </div>
-
       <div class="personagem" data-anime="dan-da-dan" data-id="jin-enjoji">
         <img src="https://i.postimg.cc/wTyv63Kc/Picsart-25-11-03-00-32-36-858.jpg" alt="Jin Enjoji">
         <h2>Jin Enjoji</h2>
       </div>
-
       <div class="personagem" data-anime="dan-da-dan" data-id="enenra">
         <img src="https://i.postimg.cc/3NwkjZcR/Picsart-25-11-03-00-36-00-583.jpg" alt="Enenra">
         <h2>Enenra</h2>
       </div>
-
       <div class="personagem" data-anime="dan-da-dan" data-id="mau-olhado">
         <img src="https://i.postimg.cc/jqGT4X9J/Picsart-25-11-03-00-40-45-978.jpg" alt="Mau Olhado">
         <h2>Mau Olhado</h2>
       </div>
-
       <div class="personagem" data-anime="dan-da-dan" data-id="reiko-kashima">
         <img src="https://i.postimg.cc/4dQcQy4K/Picsart-25-11-03-00-37-03-585.jpg" alt="Reiko Kashima">
         <h2>Reiko Kashima</h2>
       </div>
-
       <div class="personagem" data-anime="dan-da-dan" data-id="unji-zuma">
         <img src="https://i.postimg.cc/3rZjgSdR/Picsart-25-11-03-00-41-38-577.jpg" alt="Unji Zuma">
         <h2>Unji Zuma</h2>
-        <p>Líder de gangue que leva poderes do yōkai Umbrella Boy e entra em missão para vencer um jogo amaldiçoado.</p>
       </div>
-
       <div class="personagem" data-anime="dan-da-dan" data-id="rin-sawaki">
         <img src="https://i.postimg.cc/YCPzvvj8/Picsart-25-11-03-00-35-03-843.jpg" alt="Rin Sawaki">
         <h2>Rin Sawaki</h2>
-        <p>Estudante exemplar que manipula gravidade ao cantar. Envolvida em casos sobrenaturais enquanto se mantém com postura firme.</p>
       </div>
-
       <div class="personagem" data-anime="dan-da-dan" data-id="count-saint-germain">
         <img src="https://i.postimg.cc/90BB01qr/Picsart-25-11-03-00-39-41-882.jpg" alt="Count Saint-Germain">
         <h2>Count Saint-Germain</h2>
-        <p>Nobre colecionador do paranormal, que busca reunir poderes de yōkai, artefatos e alienígenas para alcançar o supremo.</p>
       </div>
-
       <div class="personagem" data-anime="dan-da-dan" data-id="vamola">
         <img src="https://i.postimg.cc/YCCdGcR2/Picsart-25-11-03-00-34-16-310.jpg" alt="Vamola">
         <h2>Vamola</h2>
-        <p>Última sobrevivente da raça suméria. Pilota uma armadura poderosa e luta ao lado dos protagonistas.</p>
       </div>
-
       <div class="personagem" data-anime="dan-da-dan" data-id="aira-shiratori">
         <img src="https://i.postimg.cc/mDHXLQw7/Picsart-25-11-03-00-38-41-747.jpg" alt="Aira Shiratori">
         <h2>Aira Shiratori</h2>
-        <p>Popular estudante que desperta habilidades yōkai ligadas à acrobacia e combate; inicialmente rival, une-se aos protagonistas.</p>
       </div>
-
       <div class="personagem" data-anime="dan-da-dan" data-id="okarun">
         <img src="https://i.postimg.cc/65NSQ1FN/Picsart-25-11-03-00-28-53-418.jpg" alt="Okarun">
         <h2>Okarun</h2>
-        <p>Estudante obcecado pelo oculto; acreditava em alienígenas, não em fantasmas — até que o mundo se virou de cabeça pra baixo.</p>
       </div>
-
       <div class="personagem" data-anime="dan-da-dan" data-id="koki-yukishiro">
         <img src="https://i.postimg.cc/SxdH37Tx/Picsart-25-11-03-00-25-39-215.jpg" alt="Kōki Yukishiro">
         <h2>Kōki Yukishiro</h2>
-        <p>Aluna que comanda pequenos seres chamados pygmies e os usa estrategicamente contra adversários.</p>
       </div>
-
       <div class="personagem" data-anime="dan-da-dan" data-id="jiji-mau-olhado">
         <img src="https://i.postimg.cc/Qtw2S86H/Picsart-25-11-03-00-37-52-262.jpg" alt="Jiji & Mau Olhado">
         <h2>Jiji & Mau Olhado</h2>
-        <p>Fusão poderosa que combina Jiji e o Mau Olhado, dominando maldições e manipulando almas.</p>
       </div>
-
-      <!-- Jujutsu Kaisen -->
       <div class="personagem" data-anime="jujutsu-kaisen" data-id="itadori-yuuji">
         <img src="https://i.postimg.cc/Gmwwwmxm/29-Sem-Titulo-20251102234830.png" alt="Itadori Yuuji">
         <h2>Itadori Yuuji</h2>
-        <p>Estudante que ingeriu o espírito Ryomen Sukuna e luta contra maldições. Corajoso e leal aos amigos.</p>
       </div>
-
       <div class="personagem" data-anime="jujutsu-kaisen" data-id="hiromi-higuruma">
         <img src="https://i.postimg.cc/TYL8yD30/Picsart-25-11-03-00-31-33-155.jpg" alt="Hiromi Higuruma">
         <h2>Hiromi Higuruma</h2>
-        <p>Feiticeiro que utilizou uma técnica amaldiçoada para “julgar” adversários com um martelo mutável que abre cortes no espaço.</p>
       </div>
-
       <div class="personagem" data-anime="jujutsu-kaisen" data-id="choso">
         <img src="https://i.postimg.cc/MTcXfnDg/34-Sem-Titulo-20251108035130.png" alt="Choso">
         <h2>Choso</h2>
-        <p>Maldição que domina o sangue; membro do grupo Death Painting Wombs com vínculo intenso aos irmãos.</p>
       </div>
-
       <div class="personagem" data-anime="jujutsu-kaisen" data-id="satoru-gojo">
         <img src="https://i.postimg.cc/8PKzpCkd/34-Sem-Titulo-20251107024300.png" alt="Satoru Gojo">
         <h2>Satoru Gojo</h2>
-        <p>Feiticeiro mais forte que já existiu; domina as técnicas do Ilimitado e possui os Seis Olhos, podendo distorcer o espaço e redefinir a batalha.</p>
       </div>
-
       <div class="personagem" data-anime="jujutsu-kaisen" data-id="toji-fushiguro">
         <img src="https://i.postimg.cc/mZyR3V97/37-Sem-Titulo-20251112174958.png" alt="Toji Fushiguro">
         <h2>Toji Fushiguro</h2>
-        <p>Assassino temido, sem energia amaldiçoada, mas com reflexos e força sobre-humanos. Conhecido como “Assassino de Feiticeiros”.</p>
       </div>
-
-      <!-- One Piece -->
       <div class="personagem" data-anime="one-piece" data-id="roronoa-zoro">
         <img src="https://i.postimg.cc/RVZN8hNL/Picsart-25-11-05-19-54-08-438.jpg" alt="Roronoa Zoro">
         <h2>Roronoa Zoro</h2>
-        <p>Espadachim dos Chapéus de Palha. Mestre no estilo Santoryū, empunha três espadas com determinação inabalável e senso de honra que corta até o próprio destino.</p>
       </div>
-
-      <!-- One Punch Man -->
       <div class="personagem" data-anime="onepunch" data-id="garou">
         <img src="https://i.postimg.cc/JhWWCzmr/Picsart-25-11-03-00-23-50-498.jpg" alt="Garou">
         <h2>Garou</h2>
-        <p>O Caçador de Heróis. Especialista em artes marciais, força e agilidade incríveis; sempre desafiando heróis e evoluindo como lutador.</p>
       </div>
-
     </div>
   </div>
 
   <script>
-  document.addEventListener('DOMContentLoaded', () => {
-    const buttons = document.querySelectorAll('.filtros button');
-    const personagens = document.querySelectorAll('.personagem');
+    document.addEventListener('DOMContentLoaded', () => {
+      const buttons = document.querySelectorAll('.filtros button');
+      const personagens = document.querySelectorAll('.personagem');
 
-    buttons.forEach(btn => {
-      btn.addEventListener('click', () => {
-        buttons.forEach(b => b.classList.remove('active'));
-        btn.classList.add('active');
-        const filter = btn.getAttribute('data-filter');
-        personagens.forEach(p => {
-          p.style.display =
-            filter === 'all' || p.getAttribute('data-anime') === filter
-            ? 'inline-block'
-            : 'none';
+      buttons.forEach(btn => {
+        btn.addEventListener('click', () => {
+          buttons.forEach(b => b.classList.remove('active'));
+          btn.classList.add('active');
+          const filter = btn.getAttribute('data-filter');
+          personagens.forEach(p => {
+            p.style.display =
+              filter === 'all' || p.getAttribute('data-anime') === filter
+              ? 'inline-block'
+              : 'none';
+          });
         });
       });
     });
-  });
   </script>
 
 </body>
