@@ -9,6 +9,17 @@
   transform: translateZ(0);
   backface-visibility: hidden;
 }
+    .anime-card,
+.personagem {
+  opacity: 0.8;
+  transition: opacity 0.4s ease, transform 0.4s ease;
+}
+
+.anime-card:hover,
+.personagem:hover {
+  opacity: 1;
+  transform: scale(1.02);
+}
 
     body {
       background-color: #0a0a0a;
