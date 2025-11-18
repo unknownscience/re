@@ -113,12 +113,23 @@
     }
 
     .anime-gallery {
-      display: flex;
-      overflow-x: auto;
-      scroll-behavior: smooth;
-      gap: 25px;
-      padding-bottom: 15px;
-    }
+  display: flex;
+  overflow-x: auto;
+  scroll-behavior: smooth;
+  gap: 25px;
+  padding-bottom: 15px;
+  scroll-snap-type: x mandatory;
+}
+
+.anime-card {
+  scroll-snap-align: center;
+  width: 360px;
+  height: 205px;
+  border-radius: 18px;
+  box-shadow: 0 0 12px rgba(255,255,255,0.15);
+  overflow: hidden;
+  background-color: #151515;
+}
 
     .anime-card {
       position: relative;
