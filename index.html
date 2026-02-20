@@ -4,33 +4,7 @@
   <meta charset="UTF-8">    
   <title>Galeria de Personagens</title>    
   <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@600&family=Poppins:wght@400;600&display=swap" rel="stylesheet">    
-  <style>   
-    // Adicione isso dentro do seu document.addEventListener('DOMContentLoaded', ...)
-const galleryWrap = document.querySelector('.gallery-wrap');
-
-galleryWrap.addEventListener('scroll', () => {
-    const cards = document.querySelectorAll('.personagem');
-    const centerX = window.innerWidth / 2;
-
-    cards.forEach(card => {
-        const rect = card.getBoundingClientRect();
-        const cardCenter = rect.left + rect.width / 2;
-        
-        // Calcula a distância do centro (quanto mais longe, mais inclina)
-        const distanceFromCenter = cardCenter - centerX;
-        const rotation = distanceFromCenter / 20; // Ajuste o divisor para mais ou menos inclinação
-        
-        // Limita a rotação para não ficar exagerado
-        const cappedRotation = Math.max(Math.min(rotation, 15), -15);
-        
-        // Aplica a rotação. Se estiver flutuando, mantemos a flutuação somada à rotação
-        if (card.classList.contains('floating')) {
-            card.style.transform = `rotateY(${-cappedRotation}deg) translateY(${Math.sin(Date.now()/1000)*8}px)`;
-        } else {
-            card.style.transform = `rotateY(${-cappedRotation}deg)`;
-        }
-    });
-});
+  <style>    
     /* CONFIGURAÇÕES GERAIS */    
     body {    
       background-color: #0a0a0a;    
@@ -42,26 +16,6 @@ galleryWrap.addEventListener('scroll', () => {
       padding: 20px;    
       overflow-x: hidden;    
     }
-    /* Container precisa de perspectiva para o efeito 3D */
-.gallery-wrap {
-  perspective: 1000px;
-  scroll-behavior: smooth; /* Deixa o deslize mais fluido */
-}
-
-.gallery-personagens {
-  display: flex;
-  gap: 25px;
-  padding: 40px 20px; /* Aumentei o padding para não cortar a inclinação */
-  transition: opacity 0.3s ease;
-  transform-style: preserve-3d;
-}
-
-/* Ajuste no card para suportar a rotação */
-.personagem {
-  /* ... mantenha suas configurações anteriores ... */
-  transition: transform 0.2s ease-out, box-shadow 0.4s ease; /* Transição mais rápida para o scroll */
-  will-change: transform; /* Otimização de performance */
-}
 
     /* FILTROS */    
     .filtros-wrap {    
@@ -96,17 +50,21 @@ galleryWrap.addEventListener('scroll', () => {
       transform: translateY(-2px);    
     }    
 
-    /* GALERIA */    
+    /* GALERIA (Ajustada para o efeito 3D) */    
     .gallery-wrap {    
       overflow-x: auto;    
       padding-bottom: 30px;    
-      padding-top: 10px;    
+      padding-top: 10px;
+      perspective: 1000px; /* Necessário para a inclinação 3D */
+      scroll-behavior: smooth;
     }    
 
     .gallery-personagens {    
       display: flex;    
       gap: 25px;    
-      transition: opacity 0.3s ease;    
+      padding: 40px 20px; /* Aumentado para o card não cortar quando inclinar */
+      transition: opacity 0.3s ease;
+      transform-style: preserve-3d;
     }    
 
     /* ANIMAÇÕES CORRIGIDAS */    
@@ -145,9 +103,9 @@ galleryWrap.addEventListener('scroll', () => {
       /* Inicialmente invisível para a cascata funcionar */
       opacity: 0;
       
-      transition: transform 0.4s cubic-bezier(.2,.8,.2,1),
-                  box-shadow 0.4s ease,
-                  border-color 0.3s ease;
+      /* Transição otimizada para o scroll e hover */
+      transition: transform 0.2s ease-out, box-shadow 0.4s ease, border-color 0.3s ease;
+      will-change: transform;
     }
 
     /* Classe aplicada via JS após a entrada */
@@ -156,7 +114,7 @@ galleryWrap.addEventListener('scroll', () => {
     }
 
     .personagem:hover {    
-      transform: translateY(-15px) !important; /* Ganha da flutuação */
+      transform: translateY(-15px) rotateY(0deg) !important; /* Reseta a inclinação no hover e levanta o card */
       box-shadow: 0 15px 30px rgba(255,255,255,0.1);    
       border-color: #555;    
       z-index: 10;
@@ -261,17 +219,49 @@ galleryWrap.addEventListener('scroll', () => {
       const buttons = document.querySelectorAll('.filtros button');    
       const personagens = document.querySelectorAll('.personagem');    
       const gallery = document.getElementById('main-gallery');
+      const galleryWrap = document.querySelector('.gallery-wrap');
 
+      // --- Efeito 3D ao fazer Scroll ---
+      galleryWrap.addEventListener('scroll', () => {
+        const centerX = window.innerWidth / 2;
+
+        personagens.forEach(card => {
+          // Só aplica o efeito se o card não estiver com display: none
+          if (card.style.display !== 'none') {
+            const rect = card.getBoundingClientRect();
+            const cardCenter = rect.left + rect.width / 2;
+            
+            // Calcula a distância do centro
+            const distanceFromCenter = cardCenter - centerX;
+            const rotation = distanceFromCenter / 20; 
+            
+            // Limita a rotação máxima
+            const cappedRotation = Math.max(Math.min(rotation, 15), -15);
+            
+            // Aplica a rotação misturada com a flutuação via JS se tiver a classe floating
+            if (card.classList.contains('floating')) {
+              // A flutuação via CSS é substituída aqui pelo JS durante o scroll
+              card.style.transform = `rotateY(${-cappedRotation}deg) translateY(${Math.sin(Date.now() / 500) * 5}px)`;
+            } else {
+              card.style.transform = `rotateY(${-cappedRotation}deg)`;
+            }
+          }
+        });
+      });
+
+      // --- Lógica de Cascata e Filtros ---
       function applyCascade() {    
         let visibleCount = 0;    
         personagens.forEach(p => {    
           if (p.style.display !== 'none') {    
             // Reset de estado
             p.style.animation = 'none';    
+            p.style.transform = ''; // Limpa os transforms inline
             p.classList.remove('floating');
             p.offsetHeight; // Truque para reiniciar animação CSS
                 
             const delay = visibleCount * 0.07;
+            
             // Aplica entrada
             p.style.animation = `cardEntrance 0.6s cubic-bezier(.2,.8,.2,1) ${delay}s both`;    
             
@@ -304,6 +294,10 @@ galleryWrap.addEventListener('scroll', () => {
             });    
 
             gallery.style.opacity = '1';    
+            
+            // Faz um pequeno scroll automático para a esquerda ao filtrar
+            galleryWrap.scrollTo({ left: 0, behavior: 'smooth' });
+            
             applyCascade();    
           }, 350);    
         });    
