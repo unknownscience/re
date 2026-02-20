@@ -221,21 +221,31 @@
       const gallery = document.getElementById('main-gallery');  
   
       // Função para aplicar o efeito de cascata (um por um)  
-      function applyCascade() {  
-        let visibleCount = 0;  
-        personagens.forEach(p => {  
-          if (p.style.display !== 'none') {  
-            // Remove animação antiga e força o recálculo (reflow)  
-            p.style.animation = 'none';  
-            p.offsetHeight;   
-              
-            // Aplica a nova animação com delay progressivo  
-            p.style.animation = `cardEntrance 0.5s ease both`;  
-            p.style.animationDelay = `${visibleCount * 0.05}s`;  
-            visibleCount++;  
-          }  
-        });  
-      }  
+      function applyCascade() {
+  let visibleCount = 0;
+
+  personagens.forEach(p => {
+    if (p.style.display !== 'none') {
+
+      // reseta animação
+      p.style.animation = 'none';
+      p.offsetHeight; 
+
+      // aplica as DUAS animações novamente
+      p.style.animation = `
+        cardEntrance 0.5s ease both,
+        floatCard 4s ease-in-out infinite
+      `;
+
+      p.style.animationDelay = `
+        ${visibleCount * 0.05}s,
+        ${visibleCount * 0.05}s
+      `;
+
+      visibleCount++;
+    }
+  });
+   }
   
       // Inicia na abertura da página  
       applyCascade();  
