@@ -33,6 +33,28 @@ display: none !important;
 opacity: 0;
 pointer-events: none;
 }
+
+// cria coroa
+const crown = document.createElement('div');
+crown.classList.add('crown-badge');
+p.appendChild(crown);
+
+// cria banner
+const banner = document.createElement('div');
+banner.classList.add('fav-banner');
+banner.textContent = "Este personagem é o favorito do criador!";
+p.appendChild(banner);
+
+crown.addEventListener('click', (e) => {
+e.stopPropagation();
+p.classList.add('show-banner');
+
+setTimeout(() => {  
+  p.classList.remove('show-banner');  
+}, 3000);
+
+});
+}
 body {
 background-color: #0a0a0a;
 background-image: radial-gradient(#111 1px, transparent 1px);
@@ -298,97 +320,3 @@ p.appendChild(favImg);
 const searchInput = document.getElementById('search-input');
 
 searchInput.addEventListener('input', () => {
-const query = searchInput.value.toLowerCase();
-
-personagens.forEach(p => {
-const name = p.querySelector('h2').textContent.toLowerCase();
-if (name.includes(query)) {
-p.style.display = 'inline-block';
-} else {
-p.style.display = 'none';
-}
-});
-
-applyCascade(); // mantém a animação
-});
-p.addEventListener('click', () => {
-if (!p.classList.contains('favoritado')) {
-p.classList.add('favoritado');
-favImg.style.transform = 'translate(-50%, -50%) scale(1.5)';
-favImg.style.opacity = '1';
-setTimeout(() => {
-favImg.style.transform = 'translate(-50%, -50%) scale(1.2)';
-}, 200);
-
-// Remove automaticamente depois de 5 segundos    
-    setTimeout(() => {    
-      p.classList.remove('favoritado');    
-      favImg.style.transform = 'translate(-50%, -50%) scale(0)';    
-      favImg.style.opacity = '0';    
-    }, 3000);    
-  }    
-});
-
-});
-
-// Função de animação em cascata
-function applyCascade() {
-let visibleCount = 0;
-personagens.forEach(p => {
-if (p.style.display !== 'none') {
-p.style.animation = 'none';
-p.offsetHeight;
-p.style.animation = cardEntrance 0.5s ease both;
-p.style.animationDelay = ${visibleCount * 0.05}s;
-visibleCount++;
-}
-});
-}
-
-applyCascade();
-
-// Filtros
-buttons.forEach(btn => {
-btn.addEventListener('click', () => {
-buttons.forEach(b => b.classList.remove('active'));
-btn.classList.add('active');
-
-const filter = btn.getAttribute('data-filter');    
-  gallery.style.opacity = '0';    
-  setTimeout(() => {    
-    personagens.forEach(p => {    
-      // ===== COROA DO CRIADOR =====
-
-if (p.classList.contains('creator-fav')) {
-
-const crown = document.createElement('div');
-crown.classList.add('crown-badge');
-p.appendChild(crown);
-
-const banner = document.createElement('div');
-banner.classList.add('fav-banner');
-banner.textContent = "Este personagem é o favorito do criador!";
-p.appendChild(banner);
-
-crown.addEventListener('click', (e) => {
-e.stopPropagation();
-p.classList.add('show-banner');
-
-setTimeout(() => {  
-  p.classList.remove('show-banner');  
-}, 3000);
-
-});
-}
-const matches = filter === 'all' || p.getAttribute('data-anime') === filter;
-p.style.display = matches ? 'inline-block' : 'none';
-});
-gallery.style.opacity = '1';
-applyCascade();
-}, 300);
-});
-});
-});
-</script>  </body>
-
-                                                  </html>
