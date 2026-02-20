@@ -28,14 +28,15 @@
     .filtros {
       display: flex;
       gap: 12px;
+      justify-content: center;
     }
 
     .filtros button {
       font-family: 'Quicksand', sans-serif;
       font-weight: 600;
       background-color: #1f1f1f;
-      color: #e1e1e1;
-      border: none;
+      color: #888;
+      border: 1px solid #333;
       padding: 10px 20px;
       border-radius: 12px;
       cursor: pointer;
@@ -48,27 +49,29 @@
     .filtros button.active {
       background-color: #e1e1e1;
       color: #0a0a0a;
+      border-color: #fff;
       transform: translateY(-2px);
     }
 
-    /* GALERIA E ANIMAÇÕES */
+    /* GALERIA COM FOCO DINÂMICO */
     .gallery-wrap {
-      overflow-x: auto;
-      padding-bottom: 30px;
-      padding-top: 10px;
+      overflow-x: scroll;
+      padding: 40px 0;
+      scroll-behavior: smooth;
+      -webkit-overflow-scrolling: touch;
     }
 
     .gallery-personagens {
       display: flex;
-      gap: 25px;
+      gap: 30px;
+      padding: 0 45vw; /* Padding lateral para permitir que o primeiro/último fiquem no centro */
       transition: opacity 0.3s ease;
     }
 
-    /* KEYFRAMES PARA O SURGIMENTO */
     @keyframes cardEntrance {
       from {
         opacity: 0;
-        transform: translateY(20px) scale(0.95);
+        transform: translateY(20px) scale(0.9);
       }
       to {
         opacity: 1;
@@ -82,41 +85,50 @@
       border-radius: 18px;
       text-align: center;
       padding: 12px;
-      box-shadow: 0 8px 20px rgba(0,0,0,0.6);
+      box-shadow: 0 8px 30px rgba(0,0,0,0.8);
       border: 1px solid #222;
       
-      /* Aplica a animação */
+      /* Animação Inicial */
       animation: cardEntrance 0.5s ease backwards;
-      transition: transform 0.3s ease, box-shadow 0.3s ease;
+
+      /* Transições Suaves para o JS */
+      transition: 
+        transform 0.4s cubic-bezier(.25,.8,.25,1),
+        box-shadow 0.3s ease,
+        opacity 0.3s ease,
+        border-color 0.3s ease;
+
+      transform-origin: center center;
     }
 
     .personagem:hover {
-      transform: translateY(-10px);
-      box-shadow: 0 12px 25px rgba(255,255,255,0.1);
-      border-color: #444;
+      border-color: #555;
+      box-shadow: 0 12px 25px rgba(255,255,255,0.05);
     }
 
     .personagem img {
       border-radius: 14px;
       display: block;
-      max-height: 380px;
+      max-height: 420px;
       width: auto;
       pointer-events: none;
+      filter: contrast(1.1);
     }
 
     .personagem h2 {
-      margin-top: 12px;
-      margin-bottom: 5px;
-      color: #e1e1e1;
+      margin-top: 15px;
+      margin-bottom: 8px;
+      color: #fff;
       font-family: 'Quicksand', sans-serif;
-      font-size: 1.1em;
+      font-size: 1.2em;
+      letter-spacing: 0.5px;
     }
 
-    /* Scrollbar estilizada para combinar com o tema */
-    ::-webkit-scrollbar { height: 8px; }
-    ::-webkit-scrollbar-track { background: #0a0a0a; }
+    /* Scrollbar Minimalista */
+    ::-webkit-scrollbar { height: 6px; }
+    ::-webkit-scrollbar-track { background: transparent; }
     ::-webkit-scrollbar-thumb { background: #333; border-radius: 10px; }
-    ::-webkit-scrollbar-thumb:hover { background: #444; }
+    ::-webkit-scrollbar-thumb:hover { background: #555; }
 
   </style>
 </head>
@@ -132,7 +144,7 @@
     </div>
   </nav>
 
-  <main class="gallery-wrap">
+  <main class="gallery-wrap" id="scroll-container">
     <div class="gallery-personagens" id="main-gallery">
 
       <div class="personagem" data-anime="dan-da-dan"><img src="https://i.postimg.cc/c1jx5ZKj/Picsart-25-11-03-00-33-27-851.jpg"><h2>Momo Ayase</h2></div>
@@ -178,36 +190,64 @@
       const buttons = document.querySelectorAll('.filtros button');
       const personagens = document.querySelectorAll('.personagem');
       const gallery = document.getElementById('main-gallery');
+      const scrollContainer = document.getElementById('scroll-container');
 
-      // Função para aplicar o efeito de cascata (um por um)
+      // --- 🧠 FUNÇÃO DE ESCALA DINÂMICA (CAROUSEL FOCUS) ---
+      function updateCarouselScale() {
+        const containerRect = scrollContainer.getBoundingClientRect();
+        const containerCenter = containerRect.left + containerRect.width / 2;
+
+        personagens.forEach(card => {
+          if (card.style.display === 'none') return;
+
+          const rect = card.getBoundingClientRect();
+          const cardCenter = rect.left + rect.width / 2;
+
+          // Calcula distância do centro da tela
+          const distance = Math.abs(containerCenter - cardCenter);
+          const maxDistance = containerRect.width / 1.5;
+
+          // Calcula escala e opacidade baseada na proximidade (Mín: 0.85, Máx: 1.0)
+          let scale = 1 - (distance / maxDistance) * 0.25;
+          if (scale < 0.82) scale = 0.82;
+          if (scale > 1) scale = 1;
+
+          let opacity = 1 - (distance / maxDistance) * 0.6;
+          if (opacity < 0.4) opacity = 0.4;
+
+          card.style.transform = `scale(${scale})`;
+          card.style.opacity = opacity;
+        });
+      }
+
+      // --- 🧠 APLICA EFEITO CASCATA NA ENTRADA ---
       function applyCascade() {
         let visibleCount = 0;
         personagens.forEach(p => {
           if (p.style.display !== 'none') {
-            // Remove animação antiga e força o recálculo (reflow)
             p.style.animation = 'none';
-            p.offsetHeight; 
-            
-            // Aplica a nova animação com delay progressivo
+            p.offsetHeight; // Reflow
             p.style.animation = `cardEntrance 0.5s ease both`;
             p.style.animationDelay = `${visibleCount * 0.05}s`;
             visibleCount++;
           }
         });
+        // Reseta o scroll ao filtrar para o início
+        scrollContainer.scrollLeft = 0;
+        setTimeout(updateCarouselScale, 100);
       }
 
-      // Inicia na abertura da página
-      applyCascade();
+      // --- LISTENERS ---
+      scrollContainer.addEventListener('scroll', updateCarouselScale);
+      window.addEventListener('resize', updateCarouselScale);
 
       buttons.forEach(btn => {
         btn.addEventListener('click', () => {
-          // Ativa o botão correto
           buttons.forEach(b => b.classList.remove('active'));
           btn.classList.add('active');
 
           const filter = btn.getAttribute('data-filter');
 
-          // Suaviza a saída da galeria
           gallery.style.opacity = '0';
 
           setTimeout(() => {
@@ -216,14 +256,16 @@
               p.style.display = matches ? 'inline-block' : 'none';
             });
 
-            // Mostra a galeria e aplica o efeito cascata nos novos itens
             gallery.style.opacity = '1';
             applyCascade();
           }, 300);
         });
       });
+
+      // Inicialização
+      applyCascade();
     });
   </script>
 
 </body>
-        </html>
+                                                                                                                                                          </html>
