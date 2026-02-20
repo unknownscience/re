@@ -31,6 +31,77 @@
 #search-input:focus {
   border-color: #e1e1e1;
   background-color: #2a2a2a;
+  .personagem.favoritado {
+  transform: scale(1.08);
+  box-shadow: 0 0 20px 5px rgba(255, 255, 255, 0.2); /* glow neutro */
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+/* Fitinha animada */
+.personagem.favoritado .favorite-png {
+  animation: favBounce 0.4s ease forwards;
+}
+
+/* Partículas harmônicas */
+.personagem.favoritado .particle {
+  position: absolute;
+  width: 6px;
+  height: 6px;
+  background-color: rgba(255, 255, 255, 0.3); /* cor neutra combinando com o card */
+  border-radius: 50%;
+  top: 50%;
+  left: 50%;
+  pointer-events: none;
+  animation: particleBurst 0.6s forwards;
+  personagens.forEach(p => {
+  const favImg = document.createElement('img');
+  favImg.src = 'https://i.postimg.cc/cJzFBL0G/ribbon-15693232.png';
+  favImg.classList.add('favorite-png');
+  p.appendChild(favImg);
+
+  p.addEventListener('click', () => {
+    if (!p.classList.contains('favoritado')) {
+      p.classList.add('favoritado');
+
+      // Criar partículas harmônicas
+      for (let i = 0; i < 8; i++) {
+        const particle = document.createElement('span');
+        particle.classList.add('particle');
+
+        // ângulo aleatório para dispersão
+        const angle = Math.random() * 2 * Math.PI;
+        const distance = 40 + Math.random() * 20;
+
+        particle.style.setProperty('--x', `${Math.cos(angle) * distance}px`);
+        particle.style.setProperty('--y', `${Math.sin(angle) * distance}px`);
+
+        p.appendChild(particle);
+
+        // Remove a partícula depois da animação
+        particle.addEventListener('animationend', () => particle.remove());
+      }
+
+      // Remove automaticamente depois de 3s
+      setTimeout(() => {
+        p.classList.remove('favoritado');
+      }, 3000);
+    }
+  });
+});
+}
+
+/* Keyframes da fitinha */
+@keyframes favBounce {
+  0% { transform: translate(-50%, -50%) scale(0); opacity: 0; }
+  50% { transform: translate(-50%, -50%) scale(1.5); opacity: 1; }
+  100% { transform: translate(-50%, -50%) scale(1.2); opacity: 1; }
+}
+
+/* Keyframes das partículas */
+@keyframes particleBurst {
+  0% { transform: translate(-50%, -50%) scale(0); opacity: 1; }
+  100% { transform: translate(calc(-50% + var(--x)), calc(-50% + var(--y))) scale(1.5); opacity: 0; }
+}
 }
 .personagem.hidden {
   display: none !important;   /* faz sumir do site */
