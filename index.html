@@ -35,6 +35,28 @@ display: none !important;
 opacity: 0;                 
 pointer-events: none;       
 }
+  if (p.classList.contains('creator-fav')) {
+
+  // cria coroa
+  const crown = document.createElement('div');
+  crown.classList.add('crown-badge');
+  p.appendChild(crown);
+
+  // cria banner
+  const banner = document.createElement('div');
+  banner.classList.add('fav-banner');
+  banner.textContent = "Este personagem é o favorito do criador!";
+  p.appendChild(banner);
+
+  crown.addEventListener('click', (e) => {
+    e.stopPropagation();
+    p.classList.add('show-banner');
+
+    setTimeout(() => {
+      p.classList.remove('show-banner');
+    }, 3000);
+  });
+    }
 body {
 background-color: #0a0a0a;
 background-image: radial-gradient(#111 1px, transparent 1px);
@@ -360,27 +382,6 @@ searchInput.addEventListener('input', () => {
       gallery.style.opacity = '0';  
       setTimeout(() => {  
         personagens.forEach(p => {  
-          // ===== COROA DO CRIADOR =====
-if (p.classList.contains('creator-fav')) {
-
-  const crown = document.createElement('div');
-  crown.classList.add('crown-badge');
-  p.appendChild(crown);
-
-  const banner = document.createElement('div');
-  banner.classList.add('fav-banner');
-  banner.textContent = "Este personagem é o favorito do criador!";
-  p.appendChild(banner);
-
-  crown.addEventListener('click', (e) => {
-    e.stopPropagation();
-    p.classList.add('show-banner');
-
-    setTimeout(() => {
-      p.classList.remove('show-banner');
-    }, 3000);
-  });
-      }
           const matches = filter === 'all' || p.getAttribute('data-anime') === filter;  
           p.style.display = matches ? 'inline-block' : 'none';  
         });  
@@ -391,4 +392,4 @@ if (p.classList.contains('creator-fav')) {
   });  
 });  
 </script>  </body>  
-                                                                                                                                            </html>
+                                                                                                                          </html>
