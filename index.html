@@ -35,6 +35,28 @@ display: none !important;
 opacity: 0;                 
 pointer-events: none;       
 }
+  if (p.classList.contains('creator-fav')) {
+
+  // cria coroa
+  const crown = document.createElement('div');
+  crown.classList.add('crown-badge');
+  p.appendChild(crown);
+
+  // cria banner
+  const banner = document.createElement('div');
+  banner.classList.add('fav-banner');
+  banner.textContent = "Este personagem é o favorito do criador!";
+  p.appendChild(banner);
+
+  crown.addEventListener('click', (e) => {
+    e.stopPropagation();
+    p.classList.add('show-banner');
+
+    setTimeout(() => {
+      p.classList.remove('show-banner');
+    }, 3000);
+  });
+    }
 body {
 background-color: #0a0a0a;
 background-image: radial-gradient(#111 1px, transparent 1px);
@@ -130,7 +152,26 @@ transform: rotate(25deg) translateX(-100%);
 animation: shine 2s linear infinite; / LOOP infinito */
 opacity: 1;
 }
+/* ===== BARRA DE FAVORITO ===== */
+.fav-banner {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  background: linear-gradient(90deg, #d4af37, #ffd700);
+  color: #000;
+  font-weight: 600;
+  font-size: 0.9rem;
+  padding: 8px 10px;
+  text-align: center;
+  transform: translateY(100%);
+  transition: transform 0.4s ease;
+  z-index: 9;
+}
 
+.personagem.show-banner .fav-banner {
+  transform: translateY(0);
+}
 @keyframes shine {
 0% { transform: rotate(25deg) translateX(-100%); }
 100% { transform: rotate(25deg) translateX(100%); }
@@ -140,27 +181,32 @@ opacity: 1;
 animation: none; / Opcional, já que agora o efeito é contínuo 
 opacity: 1;
 }
-/* ===== COROA FAVORITO DO CRIADOR ===== */
-.personagem.creator-fav::after {
-  content: "";
+/* ===== COROA CLICÁVEL ===== */
+.personagem.creator-fav .crown-badge {
   position: absolute;
-  top: 10px;
-  right: 10px;
-  width: 45px;
-  height: 45px;
+  top: 8px;
+  right: 8px;
+  width: 40px;
+  height: 40px;
   background-image: url("https://i.postimg.cc/qqNCryFj/toppng-com-simple-crown-clipart-simple-crown-drawing-simple-princess-triangle-600x337.png");
   background-size: contain;
   background-repeat: no-repeat;
   background-position: center;
-  z-index: 5;
-  filter: drop-shadow(0 0 6px rgba(255, 215, 0, 0.6));
+  cursor: pointer;
+  z-index: 10;
   animation: crownFloat 3s ease-in-out infinite;
+  filter: drop-shadow(0 0 8px rgba(255, 215, 0, 0.8));
+  transition: transform 0.3s ease;
 }
 
-/* leve flutuação da coroa */
+.personagem.creator-fav .crown-badge:hover {
+  transform: scale(1.15);
+}
+
 @keyframes crownFloat {
   0%, 100% { transform: translateY(0px); }
   50% { transform: translateY(-4px); }
+}
                                                           }
 .personagem:hover::before {
 animation: shine 1s ease forwards;
