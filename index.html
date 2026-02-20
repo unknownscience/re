@@ -96,7 +96,48 @@
     box-shadow 0.4s ease,
     border-color 0.3s ease;
     }
+/* Flutuação contínua */
+@keyframes floatCard {
+  0%, 100% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-6px);
+  }
+}
 
+/* Efeito de brilho passando */
+.personagem::before {
+  content: "";
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: linear-gradient(
+    120deg,
+    transparent 40%,
+    rgba(255,255,255,0.06) 50%,
+    transparent 60%
+  );
+  transform: rotate(25deg);
+  transition: opacity 0.3s ease;
+  opacity: 0;
+}
+
+.personagem:hover::before {
+  animation: shine 1s ease forwards;
+  opacity: 1;
+}
+
+@keyframes shine {
+  from {
+    transform: translateX(-100%) rotate(25deg);
+  }
+  to {
+    transform: translateX(100%) rotate(25deg);
+  }
+        }
     .personagem:hover {
       transform: translateY(-10px);
       box-shadow: 0 12px 25px rgba(255,255,255,0.1);
