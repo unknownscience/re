@@ -6,7 +6,6 @@
 <title>Galeria de Personagens</title>    
 <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@600&family=Poppins:wght@400;600&display=swap" rel="stylesheet">    
 <style>    
-  
   .search-wrap {    
   margin-bottom: 20px;    
   text-align: center;    
@@ -30,9 +29,9 @@ border-color: #e1e1e1;
 background-color: #2a2a2a;
 }
 .personagem.hidden {
-display: none !important;  
+display: none !important;   
 opacity: 0;                 
-pointer-events: none;      
+pointer-events: none;       
 }
 body {
 background-color: #0a0a0a;
@@ -44,7 +43,6 @@ margin: 0;
 padding: 20px;
 overflow-x: hidden;
 }
-  
 .filtros-wrap {
 overflow-x: auto;
 margin-bottom: 30px;
@@ -132,10 +130,31 @@ opacity: 1;
 }
 
 .personagem:hover::before {
-animation: none; / Opcional, já que agora o efeito é contínuo */
+animation: none; / Opcional, já que agora o efeito é contínuo /
 opacity: 1;
 }
+/ ===== COROA FAVORITO DO CRIADOR ===== */
+.personagem.creator-fav::after {
+content: "";
+position: absolute;
+top: 10px;
+right: 10px;
+width: 45px;
+height: 45px;
+background-image: url("https://i.postimg.cc/qqNCryFj/toppng-com-simple-crown-clipart-simple-crown-drawing-simple-princess-triangle-600x337.png");
+background-size: contain;
+background-repeat: no-repeat;
+background-position: center;
+z-index: 5;
+filter: drop-shadow(0 0 6px rgba(255, 215, 0, 0.6));
+animation: crownFloat 3s ease-in-out infinite;
+}
 
+/* leve flutuação da coroa */
+@keyframes crownFloat {
+0%, 100% { transform: translateY(0px); }
+50% { transform: translateY(-4px); }
+}
 .personagem:hover::before {
 animation: shine 1s ease forwards;
 opacity: 1;
@@ -222,7 +241,7 @@ transform: translate(-50%, -50%) scale(1.2);
     <div class="personagem hidden" data-anime="dan-da-dan"><img src="https://i.postimg.cc/Qtw2S86H/Picsart-25-11-03-00-37-52-262.jpg"><h2>Jiji & Mau Olhado</h2></div>    
       <div class="personagem" data-anime="jujutsu-kaisen"><img src="https://i.postimg.cc/nLwQssZR/Novo-projeto-1-EC7CA8A.png"><h2>Itadori Yuuji</h2></div>      
   <div class="personagem" data-anime="jujutsu-kaisen"><img src="https://i.postimg.cc/fLmTwkb9/Novo-projeto-1-FB59169.png"><h2>Hiromi Higuruma</h2></div>      
-  <div class="personagem" data-anime="jujutsu-kaisen"><img src="https://i.postimg.cc/sxn5jBMk/Novo-projeto-AED2C2B.png"><h2>Choso</h2></div>      
+  <div class="personagem creator-fav" data-anime="jujutsu-kaisen"><img src="https://i.postimg.cc/sxn5jBMk/Novo-projeto-AED2C2B.png"><h2>Choso</h2></div>      
   <div class="personagem" data-anime="jujutsu-kaisen"><img src="https://i.postimg.cc/hGG2W7pV/Novo-projeto-1-65A192E.png"><h2>Satoru Gojo</h2></div>      
   <div class="personagem" data-anime="jujutsu-kaisen"><img src="https://i.postimg.cc/DzQMnTT1/Novo-projeto-1-3272CEB.png"><h2>Toji Fushiguro</h2></div>      
   <div class="personagem" data-anime="jujutsu-kaisen"><img src="https://i.postimg.cc/cHx0NhPp/Novo-projeto-1-459E052.png"><h2>Ryomen Sukuna</h2></div>      
@@ -241,7 +260,7 @@ transform: translate(-50%, -50%) scale(1.2);
 document.addEventListener('DOMContentLoaded', () => {    
   const buttons = document.querySelectorAll('.filtros button');    
   const personagens = document.querySelectorAll('.personagem');    
-  const gallery = document.getElementById('main-gallery');    // Adiciona a imagem do favorito e evento de clique
+  const gallery = document.getElementById('main-gallery');
 personagens.forEach(p => {
 const favImg = document.createElement('img');
 favImg.src = 'https://i.postimg.cc/brrwbPHr/Red-simple-heart-symbol-only.png';
@@ -321,4 +340,4 @@ const filter = btn.getAttribute('data-filter');
 });
 </script>  </body>
 
-      </html>
+  </html>
