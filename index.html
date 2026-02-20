@@ -1,318 +1,402 @@
 <!DOCTYPE html>
-<html lang="pt-br">
-<head>
-<meta charset="UTF-8">
-<title>Galeria de Personagens</title>
-<link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@600&family=Poppins:wght@400;600&display=swap" rel="stylesheet">
-<style>
-/* CONFIGURAÇÕES GERAIS */
-body {
-  background-color: #0a0a0a;
-  background-image: radial-gradient(#111 1px, transparent 1px);
-  background-size: 40px 40px;
-  color: #e1e1e1;
-  font-family: 'Poppins', sans-serif;
-  margin: 0;
-  padding: 20px;
-  overflow-x: hidden;
-}
 
-.search-wrap {
-  margin-bottom: 20px;
-  text-align: center;
-}
-
-#search-input {
-  width: 90%;
-  max-width: 400px;
-  padding: 10px 15px;
-  border-radius: 12px;
-  border: 1px solid #444;
-  font-size: 1rem;
-  background-color: #1f1f1f;
-  color: #e1e1e1;
-  outline: none;
-  transition: all 0.3s ease;
+<html lang="pt-br">  
+<head>  
+<meta charset="UTF-8">  
+<title>Galeria de Personagens</title>  
+<link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@600&family=Poppins:wght@400;600&display=swap" rel="stylesheet">  
+<style>  
+/* CONFIGURAÇÕES GERAIS */  
+  .search-wrap {  
+  margin-bottom: 20px;  
+  text-align: center;  
+}  #search-input {
+width: 90%;
+max-width: 400px;
+padding: 10px 15px;
+border-radius: 12px;
+border: 1px solid #444;
+font-size: 1rem;
+background-color: #1f1f1f;
+color: #e1e1e1;
+outline: none;
+transition: all 0.3s ease;
 }
 
 #search-input::placeholder {
-  color: #888;
+color: #888;
 }
 
 #search-input:focus {
-  border-color: #e1e1e1;
-  background-color: #2a2a2a;
+border-color: #e1e1e1;
+background-color: #2a2a2a;
+.personagem.favoritado {
+transform: scale(1.08);
+box-shadow: 0 0 20px 5px rgba(255, 255, 255, 0.2); /* glow neutro */
+transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+/* Fitinha animada */
+.personagem.favoritado .favorite-png {
+animation: favBounce 0.4s ease forwards;
+}
+
+/* Partículas harmônicas /
+.personagem.favoritado .particle {
+position: absolute;
+width: 6px;
+height: 6px;
+background-color: rgba(255, 255, 255, 0.3); / cor neutra combinando com o card */
+border-radius: 50%;
+top: 50%;
+left: 50%;
+pointer-events: none;
+animation: particleBurst 0.6s forwards;
+personagens.forEach(p => {
+const favImg = document.createElement('img');
+favImg.src = 'https://i.postimg.cc/cJzFBL0G/ribbon-15693232.png';
+favImg.classList.add('favorite-png');
+p.appendChild(favImg);
+
+p.addEventListener('click', () => {
+if (!p.classList.contains('favoritado')) {
+p.classList.add('favoritado');
+
+// Criar partículas harmônicas  
+  for (let i = 0; i < 8; i++) {  
+    const particle = document.createElement('span');  
+    particle.classList.add('particle');  
+
+    // ângulo aleatório para dispersão  
+    const angle = Math.random() * 2 * Math.PI;  
+    const distance = 40 + Math.random() * 20;  
+
+    particle.style.setProperty('--x', `${Math.cos(angle) * distance}px`);  
+    particle.style.setProperty('--y', `${Math.sin(angle) * distance}px`);  
+
+    p.appendChild(particle);  
+
+    // Remove a partícula depois da animação  
+    particle.addEventListener('animationend', () => particle.remove());  
+  }  
+
+  // Remove automaticamente depois de 3s  
+  setTimeout(() => {  
+    p.classList.remove('favoritado');  
+  }, 3000);  
+}
+
+});
+});
+}
+
+/* Keyframes da fitinha */
+@keyframes favBounce {
+0% { transform: translate(-50%, -50%) scale(0); opacity: 0; }
+50% { transform: translate(-50%, -50%) scale(1.5); opacity: 1; }
+100% { transform: translate(-50%, -50%) scale(1.2); opacity: 1; }
+}
+
+/* Keyframes das partículas /
+@keyframes particleBurst {
+0% { transform: translate(-50%, -50%) scale(0); opacity: 1; }
+100% { transform: translate(calc(-50% + var(--x)), calc(-50% + var(--y))) scale(1.5); opacity: 0; }
+}
+}
+.personagem.hidden {
+display: none !important;   / faz sumir do site /
+opacity: 0;                 / opcional, para suavizar /
+pointer-events: none;       / não deixa clicar */
+}
+body {
+background-color: #0a0a0a;
+background-image: radial-gradient(#111 1px, transparent 1px);
+background-size: 40px 40px;
+color: #e1e1e1;
+font-family: 'Poppins', sans-serif;
+margin: 0;
+padding: 20px;
+overflow-x: hidden;
 }
 
 /* FILTROS */
 .filtros-wrap {
-  overflow-x: auto;
-  margin-bottom: 30px;
-  padding-bottom: 10px;
+overflow-x: auto;
+margin-bottom: 30px;
+padding-bottom: 10px;
 }
 
 .filtros {
-  display: flex;
-  gap: 12px;
+display: flex;
+gap: 12px;
 }
 
 .filtros button {
-  font-family: 'Quicksand', sans-serif;
-  font-weight: 600;
-  background-color: #1f1f1f;
-  color: #e1e1e1;
-  border: none;
-  padding: 10px 20px;
-  border-radius: 12px;
-  cursor: pointer;
-  transition: all 0.3s ease;
-  font-size: 0.95rem;
-  white-space: nowrap;
+font-family: 'Quicksand', sans-serif;
+font-weight: 600;
+background-color: #1f1f1f;
+color: #e1e1e1;
+border: none;
+padding: 10px 20px;
+border-radius: 12px;
+cursor: pointer;
+transition: all 0.3s ease;
+font-size: 0.95rem;
+white-space: nowrap;
 }
 
 .filtros button:hover,
 .filtros button.active {
-  background-color: #e1e1e1;
-  color: #0a0a0a;
-  transform: translateY(-2px);
+background-color: #e1e1e1;
+color: #0a0a0a;
+transform: translateY(-2px);
 }
 
-/* GALERIA */
+/* GALERIA E ANIMAÇÕES */
 .gallery-wrap {
-  overflow-x: auto;
-  padding-bottom: 30px;
-  padding-top: 10px;
+overflow-x: auto;
+padding-bottom: 30px;
+padding-top: 10px;
 }
 
 .gallery-personagens {
-  display: flex;
-  gap: 25px;
-  transition: opacity 0.3s ease;
+display: flex;
+gap: 25px;
+transition: opacity 0.3s ease;
 }
 
-/* CARD */
-.personagem {
-  flex: 0 0 auto;
-  background: linear-gradient(145deg, #151515, #101010);
-  border-radius: 18px;
-  text-align: center;
-  padding: 12px;
-  border: 1px solid #222;
-  position: relative;
-  overflow: hidden;
-  box-shadow: 0 10px 25px rgba(0,0,0,0.6);
-  animation: cardEntrance 0.6s ease backwards, floatCard 4s ease-in-out infinite;
-  transition: transform 0.4s cubic-bezier(.2,.8,.2,1), box-shadow 0.4s ease, border-color 0.3s ease;
-}
-
-.personagem img {
-  border-radius: 14px;
-  display: block;
-  max-height: 380px;
-  width: auto;
-  pointer-events: none;
-}
-
-.personagem h2 {
-  margin-top: 12px;
-  margin-bottom: 5px;
-  color: #e1e1e1;
-  font-family: 'Quicksand', sans-serif;
-  font-size: 1.1em;
-}
-
-/* Hover e brilho */
-.personagem::before {
-  content: "";
-  position: absolute;
-  top: -50%;
-  left: -50%;
-  width: 200%;
-  height: 200%;
-  background: linear-gradient(120deg, transparent 40%, rgba(255,255,255,0.06) 50%, transparent 60%);
-  transform: rotate(25deg) translateX(-100%);
-  animation: shine 2s linear infinite;
-  opacity: 1;
-}
-
-.personagem:hover::before {
-  animation: shine 1s ease forwards;
-  opacity: 1;
-}
-
-.personagem:hover {
-  transform: translateY(-10px);
-  box-shadow: 0 12px 25px rgba(255,255,255,0.1);
-  border-color: #444;
-}
-
-/* Animações */
 @keyframes cardEntrance {
-  from { opacity: 0; transform: translateY(20px) scale(0.95); }
-  to { opacity: 1; transform: translateY(0) scale(1); }
+from { opacity: 0; transform: translateY(20px) scale(0.95); }
+to { opacity: 1; transform: translateY(0) scale(1); }
 }
 
+.personagem {
+flex: 0 0 auto;
+background: linear-gradient(145deg, #151515, #101010);
+border-radius: 18px;
+text-align: center;
+padding: 12px;
+border: 1px solid #222;
+position: relative;
+overflow: hidden;
+box-shadow: 0 10px 25px rgba(0,0,0,0.6);
+animation: cardEntrance 0.6s ease backwards, floatCard 4s ease-in-out infinite;
+transition: transform 0.4s cubic-bezier(.2,.8,.2,1), box-shadow 0.4s ease, border-color 0.3s ease;
+}
+
+/* Flutuação contínua */
 @keyframes floatCard {
-  0%, 100% { transform: translateY(0px); }
-  50% { transform: translateY(-6px); }
+0%, 100% { transform: translateY(0px); }
+50% { transform: translateY(-6px); }
+}
+
+/* Efeito de brilho passando continuamente /
+.personagem::before {
+content: "";
+position: absolute;
+top: -50%;
+left: -50%;
+width: 200%;
+height: 200%;
+background: linear-gradient(120deg, transparent 40%, rgba(255,255,255,0.06) 50%, transparent 60%);
+transform: rotate(25deg) translateX(-100%);
+animation: shine 2s linear infinite; / LOOP infinito */
+opacity: 1;
 }
 
 @keyframes shine {
-  from { transform: translateX(-100%) rotate(25deg); }
-  to { transform: translateX(100%) rotate(25deg); }
+0% { transform: rotate(25deg) translateX(-100%); }
+100% { transform: rotate(25deg) translateX(100%); }
+}
+
+/* Remove o hover antigo /
+.personagem:hover::before {
+animation: none; / Opcional, já que agora o efeito é contínuo */
+opacity: 1;
+}
+
+.personagem:hover::before {
+animation: shine 1s ease forwards;
+opacity: 1;
+}
+
+@keyframes shine {
+from { transform: translateX(-100%) rotate(25deg); }
+to { transform: translateX(100%) rotate(25deg); }
+}
+
+.personagem:hover {
+transform: translateY(-10px);
+box-shadow: 0 12px 25px rgba(255,255,255,0.1);
+border-color: #444;
+}
+
+.personagem img {
+border-radius: 14px;
+display: block;
+max-height: 380px;
+width: auto;
+pointer-events: none;
+}
+
+.personagem h2 {
+margin-top: 12px;
+margin-bottom: 5px;
+color: #e1e1e1;
+font-family: 'Quicksand', sans-serif;
+font-size: 1.1em;
 }
 
 /* FAVORITO */
 .personagem .favorite-png {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%) scale(0);
-  width: 60px;
-  height: 60px;
-  pointer-events: none;
-  opacity: 0;
-  transition: transform 0.3s ease, opacity 0.3s ease;
-}
-
-.personagem.favoritado {
-  transform: scale(1.08);
-  box-shadow: 0 0 20px 5px rgba(255,255,255,0.2);
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
+position: absolute;
+top: 50%;
+left: 50%;
+transform: translate(-50%, -50%) scale(0);
+width: 60px;
+height: 60px;
+pointer-events: none;
+opacity: 0;
+transition: transform 0.3s ease, opacity 0.3s ease;
 }
 
 .personagem.favoritado .favorite-png {
-  animation: favBounce 0.4s ease forwards;
-  opacity: 1;
-  transform: translate(-50%, -50%) scale(1.2);
+opacity: 1;
+transform: translate(-50%, -50%) scale(1.2);
 }
 
-/* PARTICULAS */
-.personagem.favoritado .particle {
-  position: absolute;
-  width: 6px;
-  height: 6px;
-  background-color: rgba(255, 255, 255, 0.3);
-  border-radius: 50%;
-  top: 50%;
-  left: 50%;
-  pointer-events: none;
-  animation: particleBurst 0.6s forwards;
-}
-
-@keyframes favBounce {
-  0% { transform: translate(-50%, -50%) scale(0); opacity: 0; }
-  50% { transform: translate(-50%, -50%) scale(1.5); opacity: 1; }
-  100% { transform: translate(-50%, -50%) scale(1.2); opacity: 1; }
-}
-
-@keyframes particleBurst {
-  0% { transform: translate(-50%, -50%) scale(0); opacity: 1; }
-  100% { transform: translate(calc(-50% + var(--x)), calc(-50% + var(--y))) scale(1.5); opacity: 0; }
-}
-
-/* Scrollbar */
+/* Scrollbar estilizada */
 ::-webkit-scrollbar { height: 8px; }
 ::-webkit-scrollbar-track { background: #0a0a0a; }
 ::-webkit-scrollbar-thumb { background: #333; border-radius: 10px; }
 ::-webkit-scrollbar-thumb:hover { background: #444; }
 
-.personagem.hidden { display: none !important; opacity: 0; pointer-events: none; }
-</style>
-</head>
-<body>
-
-<div class="search-wrap">
-  <input type="text" id="search-input" placeholder="Search..." />
-</div>
-
-<nav class="filtros-wrap">
-  <div class="filtros">
-    <button data-filter="all" class="active">Todos</button>
-    <button data-filter="dan-da-dan">Dan da Dan</button>
-    <button data-filter="jujutsu-kaisen">Jujutsu Kaisen</button>
-    <button data-filter="one-piece">One Piece</button>
-    <button data-filter="onepunch">One Punch Man</button>
-  </div>
-</nav>
-
-<main class="gallery-wrap">
-  <div class="gallery-personagens" id="main-gallery">
-    <!-- TODOS OS PERSONAGENS AQUI -->
-    <!-- Dan-da-dan -->
-    <div class="personagem" data-anime="dan-da-dan"><img src="https://i.postimg.cc/cH5XT4Wy/Novo-projeto-1-3DCFF9F.png"><h2>Momo Ayase</h2></div>
-    <div class="personagem" data-anime="dan-da-dan"><img src="https://i.postimg.cc/6pwLrGRN/Novo-projeto-1-087F9D8.png"><h2>Jin Enjoji</h2></div>
-    <div class="personagem hidden" data-anime="dan-da-dan"><img src="https://i.postimg.cc/3NwkjZcR/Picsart-25-11-03-00-36-00-583.jpg"><h2>Enenra</h2></div>
-    <div class="personagem" data-anime="dan-da-dan"><img src="https://i.postimg.cc/LsCcdDTN/Novo-projeto-1-88CB04B.png"><h2>Evil Eye</h2></div>
-    <div class="personagem hidden" data-anime="dan-da-dan"><img src="https://i.postimg.cc/4dQcQy4K/Picsart-25-11-03-00-37-03-585.jpg"><h2>Reiko Kashima</h2></div>
-    <div class="personagem hidden" data-anime="dan-da-dan"><img src="https://i.postimg.cc/3rZjgSdR/Picsart-25-11-03-00-41-38-577.jpg"><h2>Unji Zuma</h2></div>
-    <div class="personagem hidden" data-anime="dan-da-dan"><img src="https://i.postimg.cc/YCPzvvj8/Picsart-25-11-03-00-35-03-843.jpg"><h2>Rin Sawaki</h2></div>
-    <div class="personagem hidden" data-anime="dan-da-dan"><img src="https://i.postimg.cc/90BB01qr/Picsart-25-11-03-00-39-41-882.jpg"><h2>Saint-Germain</h2></div>
-    <div class="personagem" data-anime="dan-da-dan"><img src="https://i.postimg.cc/pdx7570Q/Novo-projeto-1-6B955F6.png"><h2>Vamola</h2></div>
-    <div class="personagem" data-anime="dan-da-dan"><img src="https://i.postimg.cc/wTPY3gRS/Novo-projeto-1-5096710.png"><h2>Aira Shiratori</h2></div>
-    <div class="personagem" data-anime="dan-da-dan"><img src="https://i.postimg.cc/Pr7TZtYH/Novo-projeto-1-EA02D6A.png"><h2>Ken Takakura</h2></div>
-    <div class="personagem hidden" data-anime="dan-da-dan"><img src="https://i.postimg.cc/SxdH37Tx/Picsart-25-11-03-00-25-39-215.jpg"><h2>Kōki Yukishiro</h2></div>
-    <div class="personagem hidden" data-anime="dan-da-dan"><img src="https://i.postimg.cc/Qtw2S86H/Picsart-25-11-03-00-37-52-262.jpg"><h2>Jiji & Mau Olhado</h2></div>
-
-    <!-- Jujutsu Kaisen -->
-    <div class="personagem" data-anime="jujutsu-kaisen"><img src="https://i.postimg.cc/nLwQssZR/Novo-projeto-1-EC7CA8A.png"><h2>Itadori Yuuji</h2></div>
-    <div class="personagem" data-anime="jujutsu-kaisen"><img src="https://i.postimg.cc/fLmTwkb9/Novo-projeto-1-FB59169.png"><h2>Hiromi Higuruma</h2></div>
-    <div class="personagem" data-anime="jujutsu-kaisen"><img src="https://i.postimg.cc/sxn5jBMk/Novo-projeto-AED2C2B.png"><h2>Choso</h2></div>
-    <div class="personagem" data-anime="jujutsu-kaisen"><img src="https://i.postimg.cc/hGG2W7pV/Novo-projeto-1-65A192E.png"><h2>Satoru Gojo</h2></div>
-    <div class="personagem" data-anime="jujutsu-kaisen"><img src="https://i.postimg.cc/DzQMnTT1/Novo-projeto-1-3272CEB.png"><h2>Toji Fushiguro</h2></div>
-    <div class="personagem" data-anime="jujutsu-kaisen"><img src="https://i.postimg.cc/cHx0NhPp/Novo-projeto-1-459E052.png"><h2>Ryomen Sukuna</h2></div>
-    <div class="personagem" data-anime="jujutsu-kaisen"><img src="https://i.postimg.cc/NFtTt3QM/Novo-projeto-1-CA4F8D8.png"><h2>Megumi Fushiguro</h2></div>
-    <div class="personagem" data-anime="jujutsu-kaisen"><img src="https://i.postimg.cc/zf51npDX/Novo-projeto-1-4A8CB02.png"><h2>Yuta Okkotsu</h2></div>
-
-    <!-- One Piece -->
-    <div class="personagem" data-anime="one-piece"><img src="https://i.postimg.cc/cLvqgy1s/Picsart-25-11-18-15-51-18-090.jpg"><h2>Smoker</h2></div>
-    <div class="personagem" data-anime="one-piece"><img src="https://i.postimg.cc/RVZN8hNL/Picsart-25-11-05-19-54-08-438.jpg"><h2>Roronoa Zoro</h2></div>
-    <div class="personagem" data-anime="one-piece"><img src="https://i.postimg.cc/43XS6DsV/Untitled74-20251118174649.png"><h2>Portgas D. Ace</h2></div>
-    <div class="personagem" data-anime="one-piece"><img src="https://i.postimg.cc/yYbQdhyF/Untitled78-20251122023103.png"><h2>Crocodile</h2></div>
-    <div class="personagem" data-anime="one-piece"><img src="https://i.postimg.cc/pXbQ10ky/Untitled77-20251122023642.png"><h2>Nami</h2></div>
-    <div class="personagem" data-anime="one-piece"><img src="https://i.postimg.cc/m2zq76kx/Untitled79-20251122024447.png"><h2>Sanji</h2></div>
-
-    <!-- One Punch -->
-    <div class="personagem" data-anime="onepunch"><img src="https://i.postimg.cc/JhWWCzmr/Picsart-25-11-03-00-23-50-498.jpg"><h2>Garou</h2></div>
-    <div class="personagem" data-anime="onepunch"><img src="https://i.postimg.cc/g2tTzgZH/59-Sem-Titulo-20251113131616.png"><h2>Genos</h2></div>
-    <div class="personagem" data-anime="onepunch"><img src="https://i.postimg.cc/MZCtztYg/66-Sem-Titulo-20251113145108.png"><h2>Tatsumaki</h2></div>
-    <div class="personagem" data-anime="onepunch"><img src="https://i.postimg.cc/2yY6wVvN/68-Sem-Titulo-20251113163136.png"><h2>Saitama</h2></div>
-  </div>
-</main>
-
-<script>
-document.addEventListener('DOMContentLoaded', () => {
-  const buttons = document.querySelectorAll('.filtros button');
-  const personagens = document.querySelectorAll('.personagem');
-  const gallery = document.getElementById('main-gallery');
-
-  // Favoritar com partículas
-  personagens.forEach(p => {
-    const favImg = document.createElement('img');
-    favImg.src = 'https://i.postimg.cc/cJzFBL0G/ribbon-15693232.png';
-    favImg.classList.add('favorite-png');
-    p.appendChild(favImg);
-
-    p.addEventListener('click', () => {
-      if (!p.classList.contains('favoritado')) {
-        p.classList.add('favoritado');
-
-        // Criar partículas
-        for (let i = 0; i < 8; i++) {
-          const particle = document.createElement('span');
-          particle.classList.add('particle');
-          const angle = Math.random() * 2 * Math.PI;
-          const distance = 40 + Math.random() * 20;
-          particle.style.setProperty('--x', `${Math.cos(angle)*distance}px`);
-          particle.style.setProperty('--y', `${Math.sin(angle)*distance}px`);
-          p.appendChild(particle);
-          particle.addEventListener('animationend', () => particle.remove());
-        }
-
-        // Remove efeito depois de 3s
-        setTimeout(() => p.classList.remove('favoritado'), 3000);
-      }
-    });
-  });
-
-  // Pesquisa
+</style>  
+</head>  
+<body>    <div class="search-wrap">  
+  <input type="text" id="search-input" placeholder="Search..." />  
+  </div>  <nav class="filtros-wrap">  
+  <div class="filtros">  
+    <button data-filter="all" class="active">Todos</button>  
+    <button data-filter="dan-da-dan">Dan da Dan</button>  
+    <button data-filter="jujutsu-kaisen">Jujutsu Kaisen</button>  
+    <button data-filter="one-piece">One Piece</button>  
+    <button data-filter="onepunch">One Punch Man</button>  
+  </div>  
+</nav>  <main class="gallery-wrap">  
+  <div class="gallery-personagens" id="main-gallery">  
+    <!-- PERSONAGENS EXISTENTES -->  
+    <div class="personagem" data-anime="dan-da-dan"><img src="https://i.postimg.cc/cH5XT4Wy/Novo-projeto-1-3DCFF9F.png"><h2>Momo Ayase</h2></div>  
+    <div class="personagem" data-anime="dan-da-dan"><img src="https://i.postimg.cc/6pwLrGRN/Novo-projeto-1-087F9D8.png"><h2>Jin Enjoji</h2></div>  
+    <div class="personagem hidden" data-anime="dan-da-dan"><img src="https://i.postimg.cc/3NwkjZcR/Picsart-25-11-03-00-36-00-583.jpg"><h2>Enenra</h2></div>  
+    <div class="personagem" data-anime="dan-da-dan"><img src="https://i.postimg.cc/LsCcdDTN/Novo-projeto-1-88CB04B.png"><h2>Evil Eye</h2></div>  
+    <div class="personagem hidden" data-anime="dan-da-dan"><img src="https://i.postimg.cc/4dQcQy4K/Picsart-25-11-03-00-37-03-585.jpg"><h2>Reiko Kashima</h2></div>  
+    <div class="personagem hidden" data-anime="dan-da-dan"><img src="https://i.postimg.cc/3rZjgSdR/Picsart-25-11-03-00-41-38-577.jpg"><h2>Unji Zuma</h2></div>  
+    <div class="personagem hidden" data-anime="dan-da-dan"><img src="https://i.postimg.cc/YCPzvvj8/Picsart-25-11-03-00-35-03-843.jpg"><h2>Rin Sawaki</h2></div>  
+    <div class="personagem hidden" data-anime="dan-da-dan"><img src="https://i.postimg.cc/90BB01qr/Picsart-25-11-03-00-39-41-882.jpg"><h2>Saint-Germain</h2></div>  
+    <div class="personagem" data-anime="dan-da-dan"><img src="https://i.postimg.cc/pdx7570Q/Novo-projeto-1-6B955F6.png"><h2>Vamola</h2></div>  
+    <div class="personagem" data-anime="dan-da-dan"><img src="https://i.postimg.cc/wTPY3gRS/Novo-projeto-1-5096710.png"><h2>Aira Shiratori</h2></div>  
+    <div class="personagem" data-anime="dan-da-dan"><img src="https://i.postimg.cc/Pr7TZtYH/Novo-projeto-1-EA02D6A.png"><h2>Ken Takakura</h2></div>  
+    <div class="personagem hidden" data-anime="dan-da-dan"><img src="https://i.postimg.cc/SxdH37Tx/Picsart-25-11-03-00-25-39-215.jpg"><h2>Kōki Yukishiro</h2></div>  
+    <div class="personagem hidden" data-anime="dan-da-dan"><img src="https://i.postimg.cc/Qtw2S86H/Picsart-25-11-03-00-37-52-262.jpg"><h2>Jiji & Mau Olhado</h2></div>  
+      <div class="personagem" data-anime="jujutsu-kaisen"><img src="https://i.postimg.cc/nLwQssZR/Novo-projeto-1-EC7CA8A.png"><h2>Itadori Yuuji</h2></div>    
+  <div class="personagem" data-anime="jujutsu-kaisen"><img src="https://i.postimg.cc/fLmTwkb9/Novo-projeto-1-FB59169.png"><h2>Hiromi Higuruma</h2></div>    
+  <div class="personagem" data-anime="jujutsu-kaisen"><img src="https://i.postimg.cc/sxn5jBMk/Novo-projeto-AED2C2B.png"><h2>Choso</h2></div>    
+  <div class="personagem" data-anime="jujutsu-kaisen"><img src="https://i.postimg.cc/hGG2W7pV/Novo-projeto-1-65A192E.png"><h2>Satoru Gojo</h2></div>    
+  <div class="personagem" data-anime="jujutsu-kaisen"><img src="https://i.postimg.cc/DzQMnTT1/Novo-projeto-1-3272CEB.png"><h2>Toji Fushiguro</h2></div>    
+  <div class="personagem" data-anime="jujutsu-kaisen"><img src="https://i.postimg.cc/cHx0NhPp/Novo-projeto-1-459E052.png"><h2>Ryomen Sukuna</h2></div>    
+  <div class="personagem" data-anime="jujutsu-kaisen"><img src="https://i.postimg.cc/NFtTt3QM/Novo-projeto-1-CA4F8D8.png"><h2>Megumi Fushiguro</h2></div>    
+  <div class="personagem" data-anime="jujutsu-kaisen"><img src="https://i.postimg.cc/zf51npDX/Novo-projeto-1-4A8CB02.png"><h2>Yuta Okkotsu</h2></div>      <div class="personagem" data-anime="one-piece"><img src="https://i.postimg.cc/cLvqgy1s/Picsart-25-11-18-15-51-18-090.jpg"><h2>Smoker</h2></div>    
+  <div class="personagem" data-anime="one-piece"><img src="https://i.postimg.cc/RVZN8hNL/Picsart-25-11-05-19-54-08-438.jpg"><h2>Roronoa Zoro</h2></div>    
+  <div class="personagem" data-anime="one-piece"><img src="https://i.postimg.cc/43XS6DsV/Untitled74-20251118174649.png"><h2>Portgas D. Ace</h2></div>    
+  <div class="personagem" data-anime="one-piece"><img src="https://i.postimg.cc/yYbQdhyF/Untitled78-20251122023103.png"><h2>Crocodile</h2></div>    
+  <div class="personagem" data-anime="one-piece"><img src="https://i.postimg.cc/pXbQ10ky/Untitled77-20251122023642.png"><h2>Nami</h2></div>    
+  <div class="personagem" data-anime="one-piece"><img src="https://i.postimg.cc/m2zq76kx/Untitled79-20251122024447.png"><h2>Sanji</h2></div>      <div class="personagem" data-anime="onepunch"><img src="https://i.postimg.cc/JhWWCzmr/Picsart-25-11-03-00-23-50-498.jpg"><h2>Garou</h2></div>    
+  <div class="personagem" data-anime="onepunch"><img src="https://i.postimg.cc/g2tTzgZH/59-Sem-Titulo-20251113131616.png"><h2>Genos</h2></div>    
+  <div class="personagem" data-anime="onepunch"><img src="https://i.postimg.cc/MZCtztYg/66-Sem-Titulo-20251113145108.png"><h2>Tatsumaki</h2></div>    
+  <div class="personagem" data-anime="onepunch"><img src="https://i.postimg.cc/2yY6wVvN/68-Sem-Titulo-20251113163136.png"><h2>Saitama</h2></div>  <!-- Continue os demais personagens aqui como estavam -->  
+  </div>  
+</main>  <script>  
+document.addEventListener('DOMContentLoaded', () => {  
+  const buttons = document.querySelectorAll('.filtros button');  
+  const personagens = document.querySelectorAll('.personagem');  
+  const gallery = document.getElementById('main-gallery');  
+  
+  // Adiciona a imagem do favorito e evento de clique  
+  personagens.forEach(p => {  
+    const favImg = document.createElement('img');  
+    favImg.src = 'https://i.postimg.cc/cJzFBL0G/ribbon-15693232.png';  
+    favImg.classList.add('favorite-png');  
+    p.appendChild(favImg);  
+const searchInput = document.getElementById('search-input');  
+  
+searchInput.addEventListener('input', () => {  
+  const query = searchInput.value.toLowerCase();  
+  
+  personagens.forEach(p => {  
+    const name = p.querySelector('h2').textContent.toLowerCase();  
+    if (name.includes(query)) {  
+      p.style.display = 'inline-block';  
+    } else {  
+      p.style.display = 'none';  
+    }  
+  });  
+  
+  applyCascade(); // mantém a animação  
+});  
+    p.addEventListener('click', () => {  
+      if (!p.classList.contains('favoritado')) {  
+        p.classList.add('favoritado');  
+        favImg.style.transform = 'translate(-50%, -50%) scale(1.5)';  
+        favImg.style.opacity = '1';  
+        setTimeout(() => {  
+          favImg.style.transform = 'translate(-50%, -50%) scale(1.2)';  
+        }, 200);  
+  
+        // Remove automaticamente depois de 5 segundos  
+        setTimeout(() => {  
+          p.classList.remove('favoritado');  
+          favImg.style.transform = 'translate(-50%, -50%) scale(0)';  
+          favImg.style.opacity = '0';  
+        }, 3000);  
+      }  
+    });  
+  });  
+  
+  // Função de animação em cascata  
+  function applyCascade() {  
+    let visibleCount = 0;  
+    personagens.forEach(p => {  
+      if (p.style.display !== 'none') {  
+        p.style.animation = 'none';  
+        p.offsetHeight;  
+        p.style.animation = `cardEntrance 0.5s ease both`;  
+        p.style.animationDelay = `${visibleCount * 0.05}s`;  
+        visibleCount++;  
+      }  
+    });  
+  }  
+  
+  applyCascade();  
+  
+  // Filtros  
+  buttons.forEach(btn => {  
+    btn.addEventListener('click', () => {  
+      buttons.forEach(b => b.classList.remove('active'));  
+      btn.classList.add('active');  
+  
+      const filter = btn.getAttribute('data-filter');  
+      gallery.style.opacity = '0';  
+      setTimeout(() => {  
+        personagens.forEach(p => {  
+          const matches = filter === 'all' || p.getAttribute('data-anime') === filter;  
+          p.style.display = matches ? 'inline-block' : 'none';  
+        });  
+        gallery.style.opacity = '1';  
+        applyCascade();  
+      }, 300);  
+    });  
+  });  
+});  
+</script>  </body>  
+  </html>
