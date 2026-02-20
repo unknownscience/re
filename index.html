@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+
 <html lang="pt-br">    
 <head>    
 <meta charset="UTF-8">    
@@ -33,6 +34,7 @@ display: none !important;
 opacity: 0;
 pointer-events: none;
 }
+if (p.classList.contains('creator-fav')) {
 
 // cria coroa
 const crown = document.createElement('div');
@@ -320,3 +322,75 @@ p.appendChild(favImg);
 const searchInput = document.getElementById('search-input');
 
 searchInput.addEventListener('input', () => {
+const query = searchInput.value.toLowerCase();
+
+personagens.forEach(p => {
+const name = p.querySelector('h2').textContent.toLowerCase();
+if (name.includes(query)) {
+p.style.display = 'inline-block';
+} else {
+p.style.display = 'none';
+}
+});
+
+applyCascade(); // mantém a animação
+});
+p.addEventListener('click', () => {
+if (!p.classList.contains('favoritado')) {
+p.classList.add('favoritado');
+favImg.style.transform = 'translate(-50%, -50%) scale(1.5)';
+favImg.style.opacity = '1';
+setTimeout(() => {
+favImg.style.transform = 'translate(-50%, -50%) scale(1.2)';
+}, 200);
+
+// Remove automaticamente depois de 5 segundos    
+    setTimeout(() => {    
+      p.classList.remove('favoritado');    
+      favImg.style.transform = 'translate(-50%, -50%) scale(0)';    
+      favImg.style.opacity = '0';    
+    }, 3000);    
+  }    
+});
+
+});
+
+// Função de animação em cascata
+function applyCascade() {
+let visibleCount = 0;
+personagens.forEach(p => {
+if (p.style.display !== 'none') {
+p.style.animation = 'none';
+p.offsetHeight;
+p.style.animation = cardEntrance 0.5s ease both;
+p.style.animationDelay = ${visibleCount * 0.05}s;
+visibleCount++;
+}
+});
+}
+
+applyCascade();
+
+// Filtros
+buttons.forEach(btn => {
+btn.addEventListener('click', () => {
+buttons.forEach(b => b.classList.remove('active'));
+btn.classList.add('active');
+
+const filter = btn.getAttribute('data-filter');    
+  gallery.style.opacity = '0';    
+  setTimeout(() => {    
+    personagens.forEach(p => {    
+      const matches = filter === 'all' || p.getAttribute('data-anime') === filter;    
+      p.style.display = matches ? 'inline-block' : 'none';    
+    });    
+    gallery.style.opacity = '1';    
+    applyCascade();    
+  }, 300);    
+});
+
+});
+});
+</script>  </body>
+
+  </html>  
