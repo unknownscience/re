@@ -23,18 +23,11 @@
       overflow-x: auto;
       margin-bottom: 30px;
       padding-bottom: 10px;
-      position: sticky;
-      top: 0;
-      z-index: 100;
-      background: rgba(10, 10, 10, 0.9);
-      backdrop-filter: blur(10px);
     }
 
     .filtros {
       display: flex;
       gap: 12px;
-      justify-content: center;
-      padding: 10px;
     }
 
     .filtros button {
@@ -42,7 +35,7 @@
       font-weight: 600;
       background-color: #1f1f1f;
       color: #e1e1e1;
-      border: 1px solid #333;
+      border: none;
       padding: 10px 20px;
       border-radius: 12px;
       cursor: pointer;
@@ -58,38 +51,29 @@
       transform: translateY(-2px);
     }
 
-    /* GALERIA E ANIMAÇÕES DE SCROLL */
+    /* GALERIA E ANIMAÇÕES */
     .gallery-wrap {
       overflow-x: auto;
-      padding-bottom: 100px;
-      padding-top: 50px;
-      scroll-snap-type: x mandatory; /* Trava o card no centro */
-      scroll-behavior: smooth;
-      scrollbar-width: none;
-    }
-
-    .gallery-wrap::-webkit-scrollbar {
-      display: none;
+      padding-bottom: 30px;
+      padding-top: 10px;
     }
 
     .gallery-personagens {
       display: flex;
-      gap: 40px;
-      padding: 0 42vw; /* Permite que o primeiro e o último card centralizem */
+      gap: 25px;
       transition: opacity 0.3s ease;
     }
 
-    /* ANIMAÇÃO DE FOCO (CARROSSEL DINÂMICO) */
-    @keyframes focusCard {
-      0% { transform: scale(0.7); opacity: 0.3; filter: blur(4px); }
-      50% { transform: scale(1.15); opacity: 1; filter: blur(0); }
-      100% { transform: scale(0.7); opacity: 0.3; filter: blur(4px); }
-    }
-
-    /* KEYFRAMES PARA O SURGIMENTO (ENTRADA) */
+    /* KEYFRAMES PARA O SURGIMENTO */
     @keyframes cardEntrance {
-      from { opacity: 0; transform: translateY(20px); }
-      to { opacity: 1; transform: translateY(0); }
+      from {
+        opacity: 0;
+        transform: translateY(20px) scale(0.95);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+      }
     }
 
     .personagem {
@@ -98,25 +82,25 @@
       border-radius: 18px;
       text-align: center;
       padding: 12px;
-      box-shadow: 0 15px 35px rgba(0,0,0,0.7);
+      box-shadow: 0 8px 20px rgba(0,0,0,0.6);
       border: 1px solid #222;
-      scroll-snap-align: center;
-      width: 280px;
+      
+      /* Aplica a animação */
+      animation: cardEntrance 0.5s ease backwards;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
 
-      /* Configuração da Timeline de Scroll */
-      view-timeline-name: --item-scroll;
-      view-timeline-axis: inline;
-      animation: focusCard linear both;
-      animation-timeline: --item-scroll;
-      animation-range: entry 0% cover 50%, exit 50% cover 100%;
+    .personagem:hover {
+      transform: translateY(-10px);
+      box-shadow: 0 12px 25px rgba(255,255,255,0.1);
+      border-color: #444;
     }
 
     .personagem img {
       border-radius: 14px;
       display: block;
-      width: 100%;
-      height: 380px;
-      object-fit: cover;
+      max-height: 380px;
+      width: auto;
       pointer-events: none;
     }
 
@@ -125,8 +109,14 @@
       margin-bottom: 5px;
       color: #e1e1e1;
       font-family: 'Quicksand', sans-serif;
-      font-size: 1.2em;
+      font-size: 1.1em;
     }
+
+    /* Scrollbar estilizada para combinar com o tema */
+    ::-webkit-scrollbar { height: 8px; }
+    ::-webkit-scrollbar-track { background: #0a0a0a; }
+    ::-webkit-scrollbar-thumb { background: #333; border-radius: 10px; }
+    ::-webkit-scrollbar-thumb:hover { background: #444; }
 
   </style>
 </head>
@@ -188,25 +178,36 @@
       const buttons = document.querySelectorAll('.filtros button');
       const personagens = document.querySelectorAll('.personagem');
       const gallery = document.getElementById('main-gallery');
-      const galleryWrap = document.querySelector('.gallery-wrap');
 
-      // Função para resetar animação de entrada ao trocar filtro
-      function applyEntrance() {
-        personagens.forEach((p, index) => {
+      // Função para aplicar o efeito de cascata (um por um)
+      function applyCascade() {
+        let visibleCount = 0;
+        personagens.forEach(p => {
           if (p.style.display !== 'none') {
-            p.style.animationName = 'focusCard, cardEntrance';
-            p.style.animationDuration = 'linear, 0.5s';
+            // Remove animação antiga e força o recálculo (reflow)
+            p.style.animation = 'none';
+            p.offsetHeight; 
+            
+            // Aplica a nova animação com delay progressivo
+            p.style.animation = `cardEntrance 0.5s ease both`;
+            p.style.animationDelay = `${visibleCount * 0.05}s`;
+            visibleCount++;
           }
         });
       }
 
+      // Inicia na abertura da página
+      applyCascade();
+
       buttons.forEach(btn => {
         btn.addEventListener('click', () => {
+          // Ativa o botão correto
           buttons.forEach(b => b.classList.remove('active'));
           btn.classList.add('active');
 
           const filter = btn.getAttribute('data-filter');
 
+          // Suaviza a saída da galeria
           gallery.style.opacity = '0';
 
           setTimeout(() => {
@@ -215,8 +216,9 @@
               p.style.display = matches ? 'inline-block' : 'none';
             });
 
+            // Mostra a galeria e aplica o efeito cascata nos novos itens
             gallery.style.opacity = '1';
-            galleryWrap.scrollLeft = 0; // Volta ao início para manter o efeito
+            applyCascade();
           }, 300);
         });
       });
@@ -224,4 +226,4 @@
   </script>
 
 </body>
-</html>
+        </html>
