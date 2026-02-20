@@ -3,7 +3,8 @@
 <head>    
   <meta charset="UTF-8">    
   <title>Galeria de Personagens</title>    
-  <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@600&family=Poppins:wght@400;600&display=swap" rel="stylesheet">    <style>    
+  <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@600&family=Poppins:wght@400;600&display=swap" rel="stylesheet">    
+  <style>    
     /* CONFIGURAÇÕES GERAIS */    
     body {    
       background-color: #0a0a0a;    
@@ -14,160 +15,153 @@
       margin: 0;    
       padding: 20px;    
       overflow-x: hidden;    
-    }    /* FILTROS OTIMIZADOS */    
-.filtros-wrap {    
-  overflow-x: auto;    
-  margin-bottom: 30px;    
-  padding-bottom: 10px;    
-}    
+    }
 
-.filtros {    
-  display: flex;    
-  gap: 12px;    
-}    
+    /* FILTROS */    
+    .filtros-wrap {    
+      overflow-x: auto;    
+      margin-bottom: 30px;    
+      padding-bottom: 10px;    
+    }    
 
-.filtros button {    
-  font-family: 'Quicksand', sans-serif;    
-  font-weight: 600;    
-  background-color: #1f1f1f;    
-  color: #e1e1e1;    
-  border: none;    
-  padding: 10px 20px;    
-  border-radius: 12px;    
-  cursor: pointer;    
-  transition: all 0.3s ease;    
-  font-size: 0.95rem;    
-  white-space: nowrap;    
-}    
+    .filtros {    
+      display: flex;    
+      gap: 12px;    
+    }    
 
-.filtros button:hover,    
-.filtros button.active {    
-  background-color: #e1e1e1;    
-  color: #0a0a0a;    
-  transform: translateY(-2px);    
-}    
+    .filtros button {    
+      font-family: 'Quicksand', sans-serif;    
+      font-weight: 600;    
+      background-color: #1f1f1f;    
+      color: #e1e1e1;    
+      border: none;    
+      padding: 10px 20px;    
+      border-radius: 12px;    
+      cursor: pointer;    
+      transition: all 0.3s ease;    
+      font-size: 0.95rem;    
+      white-space: nowrap;    
+    }    
 
-/* GALERIA E ANIMAÇÕES */    
-.gallery-wrap {    
-  overflow-x: auto;    
-  padding-bottom: 30px;    
-  padding-top: 10px;    
-}    
+    .filtros button:hover,    
+    .filtros button.active {    
+      background-color: #e1e1e1;    
+      color: #0a0a0a;    
+      transform: translateY(-2px);    
+    }    
 
-.gallery-personagens {    
-  display: flex;    
-  gap: 25px;    
-  transition: opacity 0.3s ease;    
-}    
+    /* GALERIA */    
+    .gallery-wrap {    
+      overflow-x: auto;    
+      padding-bottom: 30px;    
+      padding-top: 10px;    
+    }    
 
-/* KEYFRAMES PARA O SURGIMENTO */    
-@keyframes cardEntrance {    
-  from {    
-    opacity: 0;    
-    transform: translateY(20px) scale(0.95);    
-  }    
-  to {    
-    opacity: 1;    
-    transform: translateY(0) scale(1);    
-  }    
-}    
+    .gallery-personagens {    
+      display: flex;    
+      gap: 25px;    
+      transition: opacity 0.3s ease;    
+    }    
 
-  
-.personagem {
+    /* ANIMAÇÕES CORRIGIDAS */    
+    @keyframes cardEntrance {    
+      from {    
+        opacity: 0;    
+        transform: translateY(30px) scale(0.9);    
+      }    
+      to {    
+        opacity: 1;    
+        transform: translateY(0) scale(1);    
+      }    
+    }
 
-flex: 0 0 auto;
-background: linear-gradient(145deg, #151515, #101010);
-border-radius: 18px;
-text-align: center;
-padding: 12px;
-border: 1px solid #222;
-position: relative;
-overflow: hidden;
+    @keyframes floatCard {
+      0%, 100% { transform: translateY(0px); }
+      50% { transform: translateY(-8px); }
+    }
 
-box-shadow: 0 10px 25px rgba(0,0,0,0.6);
+    @keyframes shine {
+      from { transform: translateX(-100%) rotate(25deg); }
+      to { transform: translateX(100%) rotate(25deg); }
+    }
 
-animation: cardEntrance 0.6s ease backwards,
-floatCard 4s ease-in-out infinite;
+    .personagem {
+      flex: 0 0 auto;
+      background: linear-gradient(145deg, #151515, #101010);
+      border-radius: 18px;
+      text-align: center;
+      padding: 12px;
+      border: 1px solid #222;
+      position: relative;
+      overflow: hidden;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.6);
+      
+      /* Inicialmente invisível para a cascata funcionar */
+      opacity: 0;
+      
+      transition: transform 0.4s cubic-bezier(.2,.8,.2,1),
+                  box-shadow 0.4s ease,
+                  border-color 0.3s ease;
+    }
 
-transition:
-transform 0.4s cubic-bezier(.2,.8,.2,1),
-box-shadow 0.4s ease,
-border-color 0.3s ease;
-}
-/* Flutuação contínua */
-@keyframes floatCard {
-0%, 100% {
-transform: translateY(0px);
-}
-50% {
-transform: translateY(-6px);
-}
-}
+    /* Classe aplicada via JS após a entrada */
+    .floating {
+      animation: floatCard 4s ease-in-out infinite;
+    }
 
-/* Efeito de brilho passando */
-.personagem::before {
-content: "";
-position: absolute;
-top: -50%;
-left: -50%;
-width: 200%;
-height: 200%;
-background: linear-gradient(
-120deg,
-transparent 40%,
-rgba(255,255,255,0.06) 50%,
-transparent 60%
-);
-transform: rotate(25deg);
-transition: opacity 0.3s ease;
-opacity: 0;
-}
+    .personagem:hover {    
+      transform: translateY(-15px) !important; /* Ganha da flutuação */
+      box-shadow: 0 15px 30px rgba(255,255,255,0.1);    
+      border-color: #555;    
+      z-index: 10;
+    }    
 
-.personagem:hover::before {
-animation: shine 1s ease forwards;
-opacity: 1;
-}
+    /* Efeito de brilho */
+    .personagem::before {
+      content: "";
+      position: absolute;
+      top: -50%;
+      left: -50%;
+      width: 200%;
+      height: 200%;
+      background: linear-gradient(120deg, transparent 40%, rgba(255,255,255,0.06) 50%, transparent 60%);
+      transform: rotate(25deg);
+      opacity: 0;
+      pointer-events: none;
+    }
 
-@keyframes shine {
-from {
-transform: translateX(-100%) rotate(25deg);
-}
-to {
-transform: translateX(100%) rotate(25deg);
-}
-}
+    .personagem:hover::before {
+      animation: shine 1s ease forwards;
+      opacity: 1;
+    }
 
-.personagem:hover {    
-  transform: translateY(-10px);    
-  box-shadow: 0 12px 25px rgba(255,255,255,0.1);    
-  border-color: #444;    
-}    
+    .personagem img {    
+      border-radius: 14px;    
+      display: block;    
+      max-height: 380px;    
+      width: auto;    
+      pointer-events: none;    
+    }    
 
-.personagem img {    
-  border-radius: 14px;    
-  display: block;    
-  max-height: 380px;    
-  width: auto;    
-  pointer-events: none;    
-}    
+    .personagem h2 {    
+      margin-top: 12px;    
+      margin-bottom: 5px;    
+      color: #e1e1e1;    
+      font-family: 'Quicksand', sans-serif;    
+      font-size: 1.1em;    
+    }    
 
-.personagem h2 {    
-  margin-top: 12px;    
-  margin-bottom: 5px;    
-  color: #e1e1e1;    
-  font-family: 'Quicksand', sans-serif;    
-  font-size: 1.1em;    
-}    
+    /* Scrollbar */    
+    ::-webkit-scrollbar { height: 8px; }    
+    ::-webkit-scrollbar-track { background: #0a0a0a; }    
+    ::-webkit-scrollbar-thumb { background: #333; border-radius: 10px; }    
+    ::-webkit-scrollbar-thumb:hover { background: #444; }
 
-/* Scrollbar estilizada para combinar com o tema */    
-::-webkit-scrollbar { height: 8px; }    
-::-webkit-scrollbar-track { background: #0a0a0a; }    
-::-webkit-scrollbar-thumb { background: #333; border-radius: 10px; }    
-::-webkit-scrollbar-thumb:hover { background: #444; }
+  </style>
+</head>
 
-</style>  </head>
-
-<body>    <nav class="filtros-wrap">    
+<body>    
+  <nav class="filtros-wrap">    
     <div class="filtros">    
       <button data-filter="all" class="active">Todos</button>    
       <button data-filter="dan-da-dan">Dan da Dan</button>    
@@ -175,82 +169,100 @@ transform: translateX(100%) rotate(25deg);
       <button data-filter="one-piece">One Piece</button>    
       <button data-filter="onepunch">One Punch Man</button>    
     </div>    
-  </nav>    <main class="gallery-wrap">    
-    <div class="gallery-personagens" id="main-gallery">  <div class="personagem" data-anime="dan-da-dan"><img src="https://i.postimg.cc/c1jx5ZKj/Picsart-25-11-03-00-33-27-851.jpg"><h2>Momo Ayase</h2></div>    
-  <div class="personagem" data-anime="dan-da-dan"><img src="https://i.postimg.cc/wTyv63Kc/Picsart-25-11-03-00-32-36-858.jpg"><h2>Jin Enjoji</h2></div>    
-  <div class="personagem" data-anime="dan-da-dan"><img src="https://i.postimg.cc/3NwkjZcR/Picsart-25-11-03-00-36-00-583.jpg"><h2>Enenra</h2></div>    
-  <div class="personagem" data-anime="dan-da-dan"><img src="https://i.postimg.cc/jqGT4X9J/Picsart-25-11-03-00-40-45-978.jpg"><h2>Mau Olhado</h2></div>    
-  <div class="personagem" data-anime="dan-da-dan"><img src="https://i.postimg.cc/4dQcQy4K/Picsart-25-11-03-00-37-03-585.jpg"><h2>Reiko Kashima</h2></div>    
-  <div class="personagem" data-anime="dan-da-dan"><img src="https://i.postimg.cc/3rZjgSdR/Picsart-25-11-03-00-41-38-577.jpg"><h2>Unji Zuma</h2></div>    
-  <div class="personagem" data-anime="dan-da-dan"><img src="https://i.postimg.cc/YCPzvvj8/Picsart-25-11-03-00-35-03-843.jpg"><h2>Rin Sawaki</h2></div>    
-  <div class="personagem" data-anime="dan-da-dan"><img src="https://i.postimg.cc/90BB01qr/Picsart-25-11-03-00-39-41-882.jpg"><h2>Saint-Germain</h2></div>    
-  <div class="personagem" data-anime="dan-da-dan"><img src="https://i.postimg.cc/YCCdGcR2/Picsart-25-11-03-00-34-16-310.jpg"><h2>Vamola</h2></div>    
-  <div class="personagem" data-anime="dan-da-dan"><img src="https://i.postimg.cc/mDHXLQw7/Picsart-25-11-03-00-38-41-747.jpg"><h2>Aira Shiratori</h2></div>    
-  <div class="personagem" data-anime="dan-da-dan"><img src="https://i.postimg.cc/65NSQ1FN/Picsart-25-11-03-00-28-53-418.jpg"><h2>Okarun</h2></div>    
-  <div class="personagem" data-anime="dan-da-dan"><img src="https://i.postimg.cc/SxdH37Tx/Picsart-25-11-03-00-25-39-215.jpg"><h2>Kōki Yukishiro</h2></div>    
-  <div class="personagem" data-anime="dan-da-dan"><img src="https://i.postimg.cc/Qtw2S86H/Picsart-25-11-03-00-37-52-262.jpg"><h2>Jiji & Mau Olhado</h2></div>      <div class="personagem" data-anime="jujutsu-kaisen"><img src="https://i.postimg.cc/Gmwwwmxm/29-Sem-Titulo-20251102234830.png"><h2>Itadori Yuuji</h2></div>    
-  <div class="personagem" data-anime="jujutsu-kaisen"><img src="https://i.postimg.cc/L5TW4sTh/316-Sem-Titulo-20260219204711.jpg"><h2>Hiromi Higuruma</h2></div>    
-  <div class="personagem" data-anime="jujutsu-kaisen"><img src="https://i.postimg.cc/tJ6k9ZJd/42-Sem-Titulo-20251112231853.png"><h2>Choso</h2></div>    
-  <div class="personagem" data-anime="jujutsu-kaisen"><img src="https://i.postimg.cc/8PKzpCkd/34-Sem-Titulo-20251107024300.png"><h2>Satoru Gojo</h2></div>    
-  <div class="personagem" data-anime="jujutsu-kaisen"><img src="https://i.postimg.cc/mZyR3V97/37-Sem-Titulo-20251112174958.png"><h2>Toji Fushiguro</h2></div>    
-  <div class="personagem" data-anime="jujutsu-kaisen"><img src="https://i.postimg.cc/s2kFRHBb/38-Sem-Titulo-20251112191937.png"><h2>Ryomen Sukuna</h2></div>    
-  <div class="personagem" data-anime="jujutsu-kaisen"><img src="https://i.postimg.cc/289YYNhz/Untitled75-20251119175242.png"><h2>Megumi Fushiguro</h2></div>    
-  <div class="personagem" data-anime="jujutsu-kaisen"><img src="https://i.postimg.cc/sDGVYVG7/43-Sem-Titulo-20251112235629.png"><h2>Yuta Okkotsu</h2></div>      <div class="personagem" data-anime="one-piece"><img src="https://i.postimg.cc/cLvqgy1s/Picsart-25-11-18-15-51-18-090.jpg"><h2>Smoker</h2></div>    
-  <div class="personagem" data-anime="one-piece"><img src="https://i.postimg.cc/RVZN8hNL/Picsart-25-11-05-19-54-08-438.jpg"><h2>Roronoa Zoro</h2></div>    
-  <div class="personagem" data-anime="one-piece"><img src="https://i.postimg.cc/43XS6DsV/Untitled74-20251118174649.png"><h2>Portgas D. Ace</h2></div>    
-  <div class="personagem" data-anime="one-piece"><img src="https://i.postimg.cc/yYbQdhyF/Untitled78-20251122023103.png"><h2>Crocodile</h2></div>    
-  <div class="personagem" data-anime="one-piece"><img src="https://i.postimg.cc/pXbQ10ky/Untitled77-20251122023642.png"><h2>Nami</h2></div>    
-  <div class="personagem" data-anime="one-piece"><img src="https://i.postimg.cc/m2zq76kx/Untitled79-20251122024447.png"><h2>Sanji</h2></div>      <div class="personagem" data-anime="onepunch"><img src="https://i.postimg.cc/JhWWCzmr/Picsart-25-11-03-00-23-50-498.jpg"><h2>Garou</h2></div>    
-  <div class="personagem" data-anime="onepunch"><img src="https://i.postimg.cc/g2tTzgZH/59-Sem-Titulo-20251113131616.png"><h2>Genos</h2></div>    
-  <div class="personagem" data-anime="onepunch"><img src="https://i.postimg.cc/MZCtztYg/66-Sem-Titulo-20251113145108.png"><h2>Tatsumaki</h2></div>    
-  <div class="personagem" data-anime="onepunch"><img src="https://i.postimg.cc/2yY6wVvN/68-Sem-Titulo-20251113163136.png"><h2>Saitama</h2></div>    </div>    </main>    <script>    
+  </nav>
+
+  <main class="gallery-wrap">    
+    <div class="gallery-personagens" id="main-gallery">
+      <div class="personagem" data-anime="dan-da-dan"><img src="https://i.postimg.cc/c1jx5ZKj/Picsart-25-11-03-00-33-27-851.jpg"><h2>Momo Ayase</h2></div>    
+      <div class="personagem" data-anime="dan-da-dan"><img src="https://i.postimg.cc/wTyv63Kc/Picsart-25-11-03-00-32-36-858.jpg"><h2>Jin Enjoji</h2></div>    
+      <div class="personagem" data-anime="dan-da-dan"><img src="https://i.postimg.cc/3NwkjZcR/Picsart-25-11-03-00-36-00-583.jpg"><h2>Enenra</h2></div>    
+      <div class="personagem" data-anime="dan-da-dan"><img src="https://i.postimg.cc/jqGT4X9J/Picsart-25-11-03-00-40-45-978.jpg"><h2>Mau Olhado</h2></div>    
+      <div class="personagem" data-anime="dan-da-dan"><img src="https://i.postimg.cc/4dQcQy4K/Picsart-25-11-03-00-37-03-585.jpg"><h2>Reiko Kashima</h2></div>    
+      <div class="personagem" data-anime="dan-da-dan"><img src="https://i.postimg.cc/3rZjgSdR/Picsart-25-11-03-00-41-38-577.jpg"><h2>Unji Zuma</h2></div>    
+      <div class="personagem" data-anime="dan-da-dan"><img src="https://i.postimg.cc/YCPzvvj8/Picsart-25-11-03-00-35-03-843.jpg"><h2>Rin Sawaki</h2></div>    
+      <div class="personagem" data-anime="dan-da-dan"><img src="https://i.postimg.cc/90BB01qr/Picsart-25-11-03-00-39-41-882.jpg"><h2>Saint-Germain</h2></div>    
+      <div class="personagem" data-anime="dan-da-dan"><img src="https://i.postimg.cc/YCCdGcR2/Picsart-25-11-03-00-34-16-310.jpg"><h2>Vamola</h2></div>    
+      <div class="personagem" data-anime="dan-da-dan"><img src="https://i.postimg.cc/mDHXLQw7/Picsart-25-11-03-00-38-41-747.jpg"><h2>Aira Shiratori</h2></div>    
+      <div class="personagem" data-anime="dan-da-dan"><img src="https://i.postimg.cc/65NSQ1FN/Picsart-25-11-03-00-28-53-418.jpg"><h2>Okarun</h2></div>    
+      <div class="personagem" data-anime="dan-da-dan"><img src="https://i.postimg.cc/SxdH37Tx/Picsart-25-11-03-00-25-39-215.jpg"><h2>Kōki Yukishiro</h2></div>    
+      <div class="personagem" data-anime="dan-da-dan"><img src="https://i.postimg.cc/Qtw2S86H/Picsart-25-11-03-00-37-52-262.jpg"><h2>Jiji & Mau Olhado</h2></div>
+      
+      <div class="personagem" data-anime="jujutsu-kaisen"><img src="https://i.postimg.cc/Gmwwwmxm/29-Sem-Titulo-20251102234830.png"><h2>Itadori Yuuji</h2></div>    
+      <div class="personagem" data-anime="jujutsu-kaisen"><img src="https://i.postimg.cc/L5TW4sTh/316-Sem-Titulo-20260219204711.jpg"><h2>Hiromi Higuruma</h2></div>    
+      <div class="personagem" data-anime="jujutsu-kaisen"><img src="https://i.postimg.cc/tJ6k9ZJd/42-Sem-Titulo-20251112231853.png"><h2>Choso</h2></div>    
+      <div class="personagem" data-anime="jujutsu-kaisen"><img src="https://i.postimg.cc/8PKzpCkd/34-Sem-Titulo-20251107024300.png"><h2>Satoru Gojo</h2></div>    
+      <div class="personagem" data-anime="jujutsu-kaisen"><img src="https://i.postimg.cc/mZyR3V97/37-Sem-Titulo-20251112174958.png"><h2>Toji Fushiguro</h2></div>    
+      <div class="personagem" data-anime="jujutsu-kaisen"><img src="https://i.postimg.cc/s2kFRHBb/38-Sem-Titulo-20251112191937.png"><h2>Ryomen Sukuna</h2></div>    
+      <div class="personagem" data-anime="jujutsu-kaisen"><img src="https://i.postimg.cc/289YYNhz/Untitled75-20251119175242.png"><h2>Megumi Fushiguro</h2></div>    
+      <div class="personagem" data-anime="jujutsu-kaisen"><img src="https://i.postimg.cc/sDGVYVG7/43-Sem-Titulo-20251112235629.png"><h2>Yuta Okkotsu</h2></div>
+      
+      <div class="personagem" data-anime="one-piece"><img src="https://i.postimg.cc/cLvqgy1s/Picsart-25-11-18-15-51-18-090.jpg"><h2>Smoker</h2></div>    
+      <div class="personagem" data-anime="one-piece"><img src="https://i.postimg.cc/RVZN8hNL/Picsart-25-11-05-19-54-08-438.jpg"><h2>Roronoa Zoro</h2></div>    
+      <div class="personagem" data-anime="one-piece"><img src="https://i.postimg.cc/43XS6DsV/Untitled74-20251118174649.png"><h2>Portgas D. Ace</h2></div>    
+      <div class="personagem" data-anime="one-piece"><img src="https://i.postimg.cc/yYbQdhyF/Untitled78-20251122023103.png"><h2>Crocodile</h2></div>    
+      <div class="personagem" data-anime="one-piece"><img src="https://i.postimg.cc/pXbQ10ky/Untitled77-20251122023642.png"><h2>Nami</h2></div>    
+      <div class="personagem" data-anime="one-piece"><img src="https://i.postimg.cc/m2zq76kx/Untitled79-20251122024447.png"><h2>Sanji</h2></div>
+      
+      <div class="personagem" data-anime="onepunch"><img src="https://i.postimg.cc/JhWWCzmr/Picsart-25-11-03-00-23-50-498.jpg"><h2>Garou</h2></div>    
+      <div class="personagem" data-anime="onepunch"><img src="https://i.postimg.cc/g2tTzgZH/59-Sem-Titulo-20251113131616.png"><h2>Genos</h2></div>    
+      <div class="personagem" data-anime="onepunch"><img src="https://i.postimg.cc/MZCtztYg/66-Sem-Titulo-20251113145108.png"><h2>Tatsumaki</h2></div>    
+      <div class="personagem" data-anime="onepunch"><img src="https://i.postimg.cc/2yY6wVvN/68-Sem-Titulo-20251113163136.png"><h2>Saitama</h2></div>    
+    </div>    
+  </main>
+
+  <script>    
     document.addEventListener('DOMContentLoaded', () => {    
       const buttons = document.querySelectorAll('.filtros button');    
       const personagens = document.querySelectorAll('.personagem');    
-      const gallery = document.getElementById('main-gallery');    // Função para aplicar o efeito de cascata (um por um)    
-  function applyCascade() {    
-    let visibleCount = 0;    
-    personagens.forEach(p => {    
-      if (p.style.display !== 'none') {    
-        // Remove animação antiga e força o recálculo (reflow)    
-        p.style.animation = 'none';    
-        p.offsetHeight;     
-            
-        // Aplica a nova animação com delay progressivo    
-        p.style.animation = `cardEntrance 0.5s ease both`;    
-        p.style.animationDelay = `${visibleCount * 0.05}s`;    
-        visibleCount++;    
-      }    
-    });    
-  }    
+      const gallery = document.getElementById('main-gallery');
 
-  // Inicia na abertura da página    
-  applyCascade();    
-
-  buttons.forEach(btn => {    
-    btn.addEventListener('click', () => {    
-      // Ativa o botão correto    
-      buttons.forEach(b => b.classList.remove('active'));    
-      btn.classList.add('active');    
-
-      const filter = btn.getAttribute('data-filter');    
-
-      // Suaviza a saída da galeria    
-      gallery.style.opacity = '0';    
-
-      setTimeout(() => {    
+      function applyCascade() {    
+        let visibleCount = 0;    
         personagens.forEach(p => {    
-          const matches = filter === 'all' || p.getAttribute('data-anime') === filter;    
-          p.style.display = matches ? 'inline-block' : 'none';    
+          if (p.style.display !== 'none') {    
+            // Reset de estado
+            p.style.animation = 'none';    
+            p.classList.remove('floating');
+            p.offsetHeight; // Truque para reiniciar animação CSS
+                
+            const delay = visibleCount * 0.07;
+            // Aplica entrada
+            p.style.animation = `cardEntrance 0.6s cubic-bezier(.2,.8,.2,1) ${delay}s both`;    
+            
+            // Ativa flutuação só depois que a entrada acabar
+            setTimeout(() => {
+              p.classList.add('floating');
+            }, (delay + 0.6) * 1000);
+
+            visibleCount++;    
+          }    
         });    
+      }    
 
-        // Mostra a galeria e aplica o efeito cascata nos novos itens    
-        gallery.style.opacity = '1';    
-        applyCascade();    
-      }, 300);    
-    });    
-  });    
-});
+      applyCascade();    
 
-</script>  </body>
+      buttons.forEach(btn => {    
+        btn.addEventListener('click', () => {    
+          if(btn.classList.contains('active')) return;
+
+          buttons.forEach(b => b.classList.remove('active'));    
+          btn.classList.add('active');    
+
+          const filter = btn.getAttribute('data-filter');    
+          gallery.style.opacity = '0';    
+
+          setTimeout(() => {    
+            personagens.forEach(p => {    
+              const matches = filter === 'all' || p.getAttribute('data-anime') === filter;    
+              p.style.display = matches ? 'block' : 'none';    
+            });    
+
+            gallery.style.opacity = '1';    
+            applyCascade();    
+          }, 350);    
+        });    
+      });    
+    });
+  </script>  
+</body>
 </html>
