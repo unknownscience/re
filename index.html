@@ -4,7 +4,33 @@
   <meta charset="UTF-8">    
   <title>Galeria de Personagens</title>    
   <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@600&family=Poppins:wght@400;600&display=swap" rel="stylesheet">    
-  <style>    
+  <style>   
+    // Adicione isso dentro do seu document.addEventListener('DOMContentLoaded', ...)
+const galleryWrap = document.querySelector('.gallery-wrap');
+
+galleryWrap.addEventListener('scroll', () => {
+    const cards = document.querySelectorAll('.personagem');
+    const centerX = window.innerWidth / 2;
+
+    cards.forEach(card => {
+        const rect = card.getBoundingClientRect();
+        const cardCenter = rect.left + rect.width / 2;
+        
+        // Calcula a distância do centro (quanto mais longe, mais inclina)
+        const distanceFromCenter = cardCenter - centerX;
+        const rotation = distanceFromCenter / 20; // Ajuste o divisor para mais ou menos inclinação
+        
+        // Limita a rotação para não ficar exagerado
+        const cappedRotation = Math.max(Math.min(rotation, 15), -15);
+        
+        // Aplica a rotação. Se estiver flutuando, mantemos a flutuação somada à rotação
+        if (card.classList.contains('floating')) {
+            card.style.transform = `rotateY(${-cappedRotation}deg) translateY(${Math.sin(Date.now()/1000)*8}px)`;
+        } else {
+            card.style.transform = `rotateY(${-cappedRotation}deg)`;
+        }
+    });
+});
     /* CONFIGURAÇÕES GERAIS */    
     body {    
       background-color: #0a0a0a;    
@@ -16,6 +42,26 @@
       padding: 20px;    
       overflow-x: hidden;    
     }
+    /* Container precisa de perspectiva para o efeito 3D */
+.gallery-wrap {
+  perspective: 1000px;
+  scroll-behavior: smooth; /* Deixa o deslize mais fluido */
+}
+
+.gallery-personagens {
+  display: flex;
+  gap: 25px;
+  padding: 40px 20px; /* Aumentei o padding para não cortar a inclinação */
+  transition: opacity 0.3s ease;
+  transform-style: preserve-3d;
+}
+
+/* Ajuste no card para suportar a rotação */
+.personagem {
+  /* ... mantenha suas configurações anteriores ... */
+  transition: transform 0.2s ease-out, box-shadow 0.4s ease; /* Transição mais rápida para o scroll */
+  will-change: transform; /* Otimização de performance */
+}
 
     /* FILTROS */    
     .filtros-wrap {    
