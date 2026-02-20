@@ -119,7 +119,7 @@ body {
   50% { transform: translateY(-6px); }
 }
 
-/* Efeito de brilho passando */
+/* Efeito de brilho passando continuamente */
 .personagem::before {
   content: "";
   position: absolute;
@@ -128,9 +128,20 @@ body {
   width: 200%;
   height: 200%;
   background: linear-gradient(120deg, transparent 40%, rgba(255,255,255,0.06) 50%, transparent 60%);
-  transform: rotate(25deg);
-  transition: opacity 0.3s ease;
-  opacity: 0;
+  transform: rotate(25deg) translateX(-100%);
+  animation: shine 2s linear infinite; /* LOOP infinito */
+  opacity: 1;
+}
+
+@keyframes shine {
+  0% { transform: rotate(25deg) translateX(-100%); }
+  100% { transform: rotate(25deg) translateX(100%); }
+}
+
+/* Remove o hover antigo */
+.personagem:hover::before {
+  animation: none; /* Opcional, já que agora o efeito é contínuo */
+  opacity: 1;
 }
 
 .personagem:hover::before {
@@ -194,7 +205,7 @@ body {
 <body>
 
   <div class="search-wrap">
-  <input type="text" id="search-input" placeholder="🔍 Pesquise um personagem..." />
+  <input type="text" id="search-input" placeholder="Search..." />
   </div>
 
 <nav class="filtros-wrap">
