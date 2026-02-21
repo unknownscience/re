@@ -21,6 +21,13 @@ color: #e1e1e1;
 outline: none;
 transition: all 0.3s ease;
 }
+  }
+
+/* leve flutuação da coroa */
+@keyframes crownFloat {
+  0%, 100% { transform: translateY(0px); }
+  50% { transform: translateY(-4px); }
+}
 
 #search-input::placeholder {
 color: #888;
@@ -305,11 +312,6 @@ personagens.forEach(p => {
     p.appendChild(crown);
     }
 
-/* leve flutuação da coroa */
-@keyframes crownFloat {
-  0%, 100% { transform: translateY(0px); }
-  50% { transform: translateY(-4px); }
-}
     // cria banner
     const banner = document.createElement('div');
     banner.classList.add('fav-banner');
