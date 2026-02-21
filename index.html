@@ -6,6 +6,45 @@
 <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@600&family=Poppins:wght@400;600&display=swap" rel="stylesheet">  
 <style>  
 /* CONFIGURAÇÕES GERAIS */  
+  /* ===== CONTADOR DE LIKES ===== */
+.like-counter {
+  position: absolute;
+  bottom: 10px;
+  right: 12px;
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: #ff4d6d;
+  background: rgba(0,0,0,0.6);
+  padding: 4px 8px;
+  border-radius: 20px;
+  z-index: 5;
+}
+
+/* ===== ANIMAÇÃO INSTAGRAM ===== */
+@keyframes popHeart {
+  0% { transform: translate(-50%, -50%) scale(0); opacity: 0; }
+  50% { transform: translate(-50%, -50%) scale(1.4); opacity: 1; }
+  70% { transform: translate(-50%, -50%) scale(1.1); }
+  100% { transform: translate(-50%, -50%) scale(1.2); opacity: 1; }
+}
+
+@keyframes heartBurst {
+  0% { transform: scale(0.5); opacity: 0.8; }
+  100% { transform: scale(2); opacity: 0; }
+}
+
+.heart-burst {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(255,77,109,0.5) 0%, transparent 70%);
+  transform: translate(-50%, -50%);
+  pointer-events: none;
+  animation: heartBurst 0.6s ease forwards;
+       }
   .search-wrap {  
   margin-bottom: 20px;  
   text-align: center;  
@@ -347,14 +386,54 @@ searchInput.addEventListener('input', () => {
     }, 3000);
   });
   }
-    p.addEventListener('dblclick', () => {
-      if (!p.classList.contains('favoritado')) {  
-        p.classList.add('favoritado');  
-        favImg.style.transform = 'translate(-50%, -50%) scale(1.5)';  
-        favImg.style.opacity = '1';  
-        setTimeout(() => {  
-          favImg.style.transform = 'translate(-50%, -50%) scale(1.2)';  
-        }, 200);  
+let likeCount = 0;
+
+// cria contador
+const counter = document.createElement('div');
+counter.classList.add('like-counter');
+counter.textContent = likeCount + " ❤️";
+p.appendChild(counter);
+
+// som de curtida
+const likeSound = new Audio("https://www.soundjay.com/buttons/sounds/button-09.mp3");
+
+p.addEventListener('dblclick', () => {
+
+  if (!p.classList.contains('favoritado')) {
+
+    p.classList.add('favoritado');
+
+    // aumenta contador
+    likeCount++;
+    counter.textContent = likeCount + " ❤️";
+
+    // salva no localStorage
+    localStorage.setItem(p.querySelector('h2').textContent, likeCount);
+
+    // anima coração
+    favImg.style.animation = "popHeart 0.4s ease forwards";
+
+    // cria efeito de explosão
+    const burst = document.createElement('div');
+    burst.classList.add('heart-burst');
+    p.appendChild(burst);
+
+    setTimeout(() => {
+      burst.remove();
+    }, 600);
+
+    // toca som
+    likeSound.currentTime = 0;
+    likeSound.play();
+  }
+});
+
+// carregar likes salvos
+const savedLikes = localStorage.getItem(p.querySelector('h2').textContent);
+if (savedLikes) {
+  likeCount = parseInt(savedLikes);
+  counter.textContent = likeCount + " ❤️";
+  }
   
         // Remove automaticamente depois de 5 segundos  
         setTimeout(() => {  
