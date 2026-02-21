@@ -401,10 +401,8 @@ searchInput.addEventListener('input', () => {
         });  
         gallery.style.opacity = '1';  
         applyCascade();  
-        window.scrollTo({
-  top: 0,
-  behavior: "smooth"
-});
+        const wrap = document.querySelector('.gallery-wrap');
+wrap.scrollLeft = 0;
       }, 300);  
     });  
   });  
