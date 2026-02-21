@@ -173,21 +173,24 @@ color: #e1e1e1;
 font-family: 'Quicksand', sans-serif;
 font-size: 1.1em;
 }
-  /* ===== COROA FAVORITO DO CRIADOR ===== */
-.personagem.creator-fav::after {
-  content: "";
+  /* ===== COROA CLICÁVEL ===== */
+.personagem.creator-fav .crown-badge {
   position: absolute;
-  top: 10px;
-  right: 10px;
-  width: 45px;
-  height: 45px;
+  top: 8px;
+  right: 8px;
+  width: 40px;
+  height: 40px;
   background-image: url("https://i.postimg.cc/qqNCryFj/toppng-com-simple-crown-clipart-simple-crown-drawing-simple-princess-triangle-600x337.png");
   background-size: contain;
   background-repeat: no-repeat;
   background-position: center;
-  z-index: 5;
-  filter: drop-shadow(0 0 6px rgba(255, 215, 0, 0.6));
-  animation: crownFloat 3s ease-in-out infinite;
+  cursor: pointer;
+  z-index: 10;
+  transition: transform 0.3s ease;
+}
+
+.personagem.creator-fav .crown-badge:hover {
+  transform: scale(1.15);
 }
 
 /* leve flutuação da coroa */
@@ -207,6 +210,26 @@ height: 60px;
 pointer-events: none;
 opacity: 0;
 transition: transform 0.3s ease, opacity 0.3s ease;
+}
+  /* ===== BARRA DE FAVORITO ===== */
+.fav-banner {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  background: linear-gradient(90deg, #d4af37, #ffd700);
+  color: #000;
+  font-weight: 600;
+  font-size: 0.9rem;
+  padding: 8px 10px;
+  text-align: center;
+  transform: translateY(100%);
+  transition: transform 0.4s ease;
+  z-index: 9;
+}
+
+.personagem.show-banner .fav-banner {
+  transform: translateY(0);
 }
 
 .personagem.favoritado .favorite-png {
@@ -272,6 +295,28 @@ document.addEventListener('DOMContentLoaded', () => {
   const gallery = document.getElementById('main-gallery');  
   
   // Adiciona a imagem do favorito e evento de clique  
+  if (p.classList.contains('creator-fav')) {
+
+  // cria coroa
+  const crown = document.createElement('div');
+  crown.classList.add('crown-badge');
+  p.appendChild(crown);
+
+  // cria banner
+  const banner = document.createElement('div');
+  banner.classList.add('fav-banner');
+  banner.textContent = "Este personagem é o favorito do criador!";
+  p.appendChild(banner);
+
+  crown.addEventListener('click', (e) => {
+    e.stopPropagation();
+    p.classList.add('show-banner');
+
+    setTimeout(() => {
+      p.classList.remove('show-banner');
+    }, 3000);
+  });
+  }
   personagens.forEach(p => {  
     const favImg = document.createElement('img');  
     favImg.src = 'https://i.postimg.cc/brrwbPHr/Red-simple-heart-symbol-only.png';  
