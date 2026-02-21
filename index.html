@@ -401,6 +401,10 @@ searchInput.addEventListener('input', () => {
         });  
         gallery.style.opacity = '1';  
         applyCascade();  
+        window.scrollTo({
+  top: 0,
+  behavior: "smooth"
+});
       }, 300);  
     });  
   });  
