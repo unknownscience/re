@@ -198,28 +198,6 @@ color: #e1e1e1;
 font-family: 'Quicksand', sans-serif;
 font-size: 1.1em;
 }
-  /* ===== COROA FAVORITO DO CRIADOR ===== */
-.personagem.creator-fav::after {
-  content: "";
-  position: absolute;
-  top: 10px;
-  right: 10px;
-  width: 45px;
-  height: 45px;
-  background-image: url("https://i.postimg.cc/qqNCryFj/toppng-com-simple-crown-clipart-simple-crown-drawing-simple-princess-triangle-600x337.png");
-  background-size: contain;
-  background-repeat: no-repeat;
-  background-position: center;
-  z-index: 5;
-  filter: drop-shadow(0 0 6px rgba(255, 215, 0, 0.6));
-  animation: crownFloat 3s ease-in-out infinite;
-}
-
-/* leve flutuação da coroa */
-@keyframes crownFloat {
-  0%, 100% { transform: translateY(0px); }
-  50% { transform: translateY(-4px); }
-  }
 
 /* FAVORITO */
 .personagem .favorite-png {
