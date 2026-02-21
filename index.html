@@ -293,70 +293,58 @@ document.addEventListener('DOMContentLoaded', () => {
   const buttons = document.querySelectorAll('.filtros button');  
   const personagens = document.querySelectorAll('.personagem');  
   const gallery = document.getElementById('main-gallery');  
-  
-  // Adiciona a imagem do favorito e evento de clique  
+  // Adiciona coroa, banner e favorito
+personagens.forEach(p => {
+
+  /* ========= COROA ========= */
   if (p.classList.contains('creator-fav')) {
 
-  // cria coroa
-  const crown = document.createElement('div');
-  crown.classList.add('crown-badge');
-  p.appendChild(crown);
+    // cria coroa
+    const crown = document.createElement('div');
+    crown.classList.add('crown-badge');
+    p.appendChild(crown);
 
-  // cria banner
-  const banner = document.createElement('div');
-  banner.classList.add('fav-banner');
-  banner.textContent = "Este personagem é o favorito do criador!";
-  p.appendChild(banner);
+    // cria banner
+    const banner = document.createElement('div');
+    banner.classList.add('fav-banner');
+    banner.textContent = "Este personagem é o favorito do criador!";
+    p.appendChild(banner);
 
-  crown.addEventListener('click', (e) => {
-    e.stopPropagation();
-    p.classList.add('show-banner');
+    crown.addEventListener('click', (e) => {
+      e.stopPropagation();
+      p.classList.add('show-banner');
 
-    setTimeout(() => {
-      p.classList.remove('show-banner');
-    }, 3000);
-  });
+      setTimeout(() => {
+        p.classList.remove('show-banner');
+      }, 3000);
+    });
   }
-  personagens.forEach(p => {  
-    const favImg = document.createElement('img');  
-    favImg.src = 'https://i.postimg.cc/brrwbPHr/Red-simple-heart-symbol-only.png';  
-    favImg.classList.add('favorite-png');  
-    p.appendChild(favImg);  
-const searchInput = document.getElementById('search-input');  
-  
-searchInput.addEventListener('input', () => {  
-  const query = searchInput.value.toLowerCase();  
-  
-  personagens.forEach(p => {  
-    const name = p.querySelector('h2').textContent.toLowerCase();  
-    if (name.includes(query)) {  
-      p.style.display = 'inline-block';  
-    } else {  
-      p.style.display = 'none';  
-    }  
-  });  
-  
-  applyCascade(); // mantém a animação  
-});  
-    p.addEventListener('click', () => {  
-      if (!p.classList.contains('favoritado')) {  
-        p.classList.add('favoritado');  
-        favImg.style.transform = 'translate(-50%, -50%) scale(1.5)';  
-        favImg.style.opacity = '1';  
-        setTimeout(() => {  
-          favImg.style.transform = 'translate(-50%, -50%) scale(1.2)';  
-        }, 200);  
-  
-        // Remove automaticamente depois de 5 segundos  
-        setTimeout(() => {  
-          p.classList.remove('favoritado');  
-          favImg.style.transform = 'translate(-50%, -50%) scale(0)';  
-          favImg.style.opacity = '0';  
-        }, 3000);  
-      }  
-    });  
-  });  
-  
+
+  /* ========= CORAÇÃO ========= */
+  const favImg = document.createElement('img');
+  favImg.src = 'https://i.postimg.cc/brrwbPHr/Red-simple-heart-symbol-only.png';
+  favImg.classList.add('favorite-png');
+  p.appendChild(favImg);
+
+  p.addEventListener('click', () => {
+    if (!p.classList.contains('favoritado')) {
+      p.classList.add('favoritado');
+      favImg.style.transform = 'translate(-50%, -50%) scale(1.5)';
+      favImg.style.opacity = '1';
+
+      setTimeout(() => {
+        favImg.style.transform = 'translate(-50%, -50%) scale(1.2)';
+      }, 200);
+
+      setTimeout(() => {
+        p.classList.remove('favoritado');
+        favImg.style.transform = 'translate(-50%, -50%) scale(0)';
+        favImg.style.opacity = '0';
+      }, 3000);
+    }
+  });
+
+});
   // Função de animação em cascata  
   function applyCascade() {  
     let visibleCount = 0;  
