@@ -61,9 +61,6 @@ background-color: #2a2a2a;
   transform: scale(1.15);
   }
 
-.personagem:hover {
-  box-shadow: 0 0 20px rgba(255, 0, 80, 0.4);
-
 }
 .personagem.hidden {
 display: none !important;   /* faz sumir do site */
@@ -171,12 +168,6 @@ opacity: 1;
 100% { transform: rotate(25deg) translateX(100%); }
 }
 
-/* Remove o hover antigo */
-.personagem:hover::before {
-animation: none; /* Opcional, já que agora o efeito é contínuo */
-opacity: 1;
-}
-
 .personagem:hover::before {
 animation: shine 1s ease forwards;
 opacity: 1;
@@ -186,13 +177,7 @@ opacity: 1;
 from { transform: translateX(-100%) rotate(25deg); }
 to { transform: translateX(100%) rotate(25deg); }
 }
-
-.personagem:hover {
-transform: translateY(-10px);
-box-shadow: 0 12px 25px rgba(255,255,255,0.1);
-border-color: #444;
-}
-
+  
 .personagem img {
 border-radius: 14px;
 display: block;
