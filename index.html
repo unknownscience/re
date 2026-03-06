@@ -379,6 +379,9 @@ searchInput.addEventListener('input', () => {
       }  
     });  
   });  
+  .personagem::before {
+display: none;
+  }
   
   // Função de animação em cascata  
   function applyCascade() {  
@@ -411,7 +414,7 @@ searchInput.addEventListener('input', () => {
         });  
         gallery.style.opacity = '1';  
         applyCascade();  
-      }, 300);  
+      }, 300); 
     });  
   });  
 });  
